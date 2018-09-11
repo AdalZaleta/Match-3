@@ -32,5 +32,6 @@ namespace TAAI
 		public static Manager_Input inputManager;
 		public static Manager_App appManager;
 		public static Manager_Scene sceneManager;
+        public static Manager_Audio audioManager;
 	}
 }
