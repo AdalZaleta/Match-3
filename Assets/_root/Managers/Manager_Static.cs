@@ -10,19 +10,19 @@ namespace TAAI
     //ESTE ES UN ENUMERADOR QUE NOS DICE LOS ESTADOS DE LA APLICACION
     public enum AppState
     {
-        main_menu,
-        gameplay,
-        pause_menu,
-        end_game,
-        credits
+        MAIN_MENU,
+        GAMEPLAY,
+        PAUSE_MENU,
+        END_GAME,
+        CREDITS
     }
 
     //ENUMERADO ENCARGADO DE EL MODO EN EL QUE SE ENCUENTRA EL MODO DE JUEGO
     public enum ModeGame
     {
-        endless,
-        points,
-        limitmoves
+        ENDLESS,
+        POINTS,
+        MOVE_LIMIT
     }
 
 

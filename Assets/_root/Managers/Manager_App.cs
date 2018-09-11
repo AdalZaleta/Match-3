@@ -16,13 +16,13 @@ namespace TAAI
 
 		public void SetPause()
 		{
-			Manager_Static.appManager.currentState = AppState.pause_menu;
+			Manager_Static.appManager.currentState = AppState.PAUSE_MENU;
 			Time.timeScale = 0.0f;
 		}
 
-		public void  setPlay()
+		public void  SetPlay()
 		{
-			Manager_Static.appManager.currentState = AppState.gameplay;
+			Manager_Static.appManager.currentState = AppState.GAMEPLAY;
 			Time.timeScale = 1;
 		}
 	}

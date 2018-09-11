@@ -19,22 +19,22 @@ namespace TAAI
 			//CODIGO DE LOS INPUTS DEPENDIENDO DEL ESTADO DEL JUEGO
 
             //ENTRA EN ESTE IF SI EL ESTADO DE LA APLICACION DE LA APLIACION ESTA EN PAUSA
-			if (Manager_Static.appManager.currentState == AppState.pause_menu)
+			if (Manager_Static.appManager.currentState == AppState.PAUSE_MENU)
             {
 			}
 
             //ENTRA EN ESTE IF SI EL ESTADO DE LA APLICACION DE LA APLIACION ESTA EN EL MENU PRINCIPAL
-            else if (Manager_Static.appManager.currentState == AppState.main_menu)
+            else if (Manager_Static.appManager.currentState == AppState.MAIN_MENU)
             {
 			}
 
             //ENTRA EN ESTE IF SI EL ESTADO DE LA APLICACION DE LA APLIACION ESTA EN GAMEPLAY
-            else if (Manager_Static.appManager.currentState == AppState.gameplay)
+            else if (Manager_Static.appManager.currentState == AppState.GAMEPLAY)
             {
 			}
 
             //ENTRA EN ESTE IF SI EL ESTADO DE LA APLICACION DE LA APLIACION ESTA EN FIN DEL JUEGO
-            else if (Manager_Static.appManager.currentState == AppState.end_game)
+            else if (Manager_Static.appManager.currentState == AppState.END_GAME)
             {
 			}
 		}
