@@ -8,7 +8,7 @@ namespace TAAI
 
 		public GameObject audioDad;
 		public Camera cam;
-		public AudioClip main_menu;
+		public AudioClip mainMenu;
 
 		void Awake()
 		{
@@ -17,25 +17,25 @@ namespace TAAI
 
 		void Start()
 		{
-			if (Manager_Static.appManager.currentState == AppState.main_menu)
-				playMusic (main_menu);
+			if (Manager_Static.appManager.currentState == AppState.MAIN_MENU)
+				PlayMusic (mainMenu);
 		}
 
-		public void playSoundAT (Vector3 pos, AudioClip clip)
+		public void PlaySoundAt (Vector3 pos, AudioClip clip)
 		{
 			GameObject sound = Instantiate (audioDad, pos, Quaternion.identity);
 			sound.GetComponent<AudioSource> ().PlayOneShot (clip);
 			Destroy (sound, clip.length + 0.1f);
 		}
 
-		public void playSoundGlobal(AudioClip clip)
+		public void PlaySoundGlobal(AudioClip clip)
 		{
 			GameObject sound = Instantiate (audioDad, cam.transform.position, Quaternion.identity, cam.transform);
 			sound.GetComponent<AudioSource> ().PlayOneShot (clip);
 			Destroy (sound, clip.length + 0.1f);
 		}
 
-		public void playMusic(AudioClip clip)
+		public void PlayMusic(AudioClip clip)
 		{
 			if (!GameObject.Find("jukebox"))
 			{
@@ -52,7 +52,7 @@ namespace TAAI
 			}
 		}
 
-		public void stopMusic()
+		public void StopMusic()
 		{
 			if (GameObject.Find("jukebox"))
 			{
