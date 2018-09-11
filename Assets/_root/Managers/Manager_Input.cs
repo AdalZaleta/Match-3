@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-namespace TAAI
+namespace Mangos
 {
 	public class Manager_Input : MonoBehaviour {
 
