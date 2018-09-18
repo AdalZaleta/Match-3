@@ -37,7 +37,6 @@ namespace Mangos
 
         void Update()
         {
-
             //Testing
             if (Input.GetKeyDown(KeyCode.U))
             {
@@ -65,10 +64,10 @@ namespace Mangos
         {
             for(int i = 0; i < matrix.Length; i++)
             {
-                for(int j = 0; j < matrix[j].Length; j++)
+                for(int j = 0; j < matrix[i].Length; j++)
                 {
                     Debug.Log(candies.Length + ", and " + matrix[i][j]);
-                    PoolManager.Spawn(candies[matrix[i][j]], grid.CellToLocal(new Vector3Int(i, j, 0)), Quaternion.identity);
+                    Transform candy = PoolManager.Spawn(candies[matrix[i][j]], grid.CellToWorld(new Vector3Int(i, j, 0)) + grid.cellSize/2, Quaternion.identity);
                 }
             }
         }
@@ -105,8 +104,6 @@ namespace Mangos
 
         }
 
-        
-        
     }
 }
 
