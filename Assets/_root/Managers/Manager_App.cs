@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TAAI
+namespace Mangos
 {
 	public class Manager_App : MonoBehaviour {
 

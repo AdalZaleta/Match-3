@@ -296,6 +296,7 @@ MonoBehaviour:
   candies:
   - {fileID: 1711173766727448, guid: 23b172f6008e9f847afa9bba1d2b7ce6, type: 2}
   - {fileID: 1110964612528384, guid: 118d4fb6dcfa2e44aab1f4d8d9c3043e, type: 2}
+  - {fileID: 1614265647897390, guid: 67040f94a2890be46a3f22b842f8910e, type: 2}
   grid: {fileID: 1781824386}
   x: 0
   y: 0
