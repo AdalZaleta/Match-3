@@ -161,5 +161,7 @@ namespace Mangos
 }
 
 /*TODO:
-    Pues hay un error que arreglar
+    - Que haga los swaps si se necesita
+    - Usar el arte que nos dieron
+    - Hacer un script de los dulces para las animaciones y particulas
  */
