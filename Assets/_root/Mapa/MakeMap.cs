@@ -22,6 +22,9 @@ public class MakeMap : MonoBehaviour {
 	public GameObject contenedorFilas;
 	int[][] elemento;
 	bool[][] espejo;
+	int _actF;
+	int _actC;
+	int m_contador = 1;
 
 
 	void Start () 
@@ -76,6 +79,12 @@ public class MakeMap : MonoBehaviour {
 		}
 	}
 
+	public void SelectPiece(int _fila, int _columna)
+	{
+		_actF = _fila;
+		_actC = _columna;
+	}
+
 	public void MakeMove(int _for, int _cor, int _fob, int _cob)
 	{
 		int temp = 0;
@@ -84,49 +93,62 @@ public class MakeMap : MonoBehaviour {
 		elemento[_fob][_cob] = temp;
 
 	}
-
 	public int GetElement(int fila, int columna)
 	{
 		return elemento[fila][columna];
 	}
-
-	public bool CheckMatch(int _for, int _cor)
+	public bool CheckMatch(int _for, int _cor, int _contador)
 	{
-		if(_for == 0)
+		if((_for < filas - 1) && (_cor < columnas - 1))
 		{
-			if(_cor == 0)
+			if(espejo[_for][_cor] == false)
 			{
-				if(elemento[_for][_cor] == elemento[_for + 1][_cor  + 1])
+				if(elemento[_for][_cor] == elemento[_for][_cor+1])
 				{
-					if(elemento[_for][_cor] == elemento[_for + 2][_cor  + 2])
+					if( CheckMatch(_for, _cor + 1, _contador + 1))
+					{
+						espejo[_for][_cor] = true;
+					}
+					else
+					{
+						espejo[_for][_cor] = false;
+					}
+				}
+				if(elemento[_for][_cor] == elemento[_for+1][_cor])
+				{
+					if( CheckMatch(_for + 1, _cor, _contador + 1))
+					{
+						espejo[_for][_cor] = true;
+					}
+					else
+					{
+						espejo[_for][_cor] = false;
+					}
+				}
+				else if(elemento[_for][_cor] != elemento[_for][_cor+1])
+				{
+					if(_contador > 2)
 					{
 						return true;
 					}
+					else
+					{
+						return false;
+					}
+				}
+				else if(elemento[_for][_cor] == elemento[_for+1][_cor])
+				{
+					if(_contador > 2)
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
 				}
 			}
-			else if(_cor == columnas -1)
-			{
-
-			}
-			else
-			{
-
-			}
 		}
-		else if(_for == filas - 1)
-		{
-
-		}
-		else
-		{
-
-		}
-
-		return false;
-	}
-
-	public bool CheckMap()
-	{
 		return false;
 	}
 }
