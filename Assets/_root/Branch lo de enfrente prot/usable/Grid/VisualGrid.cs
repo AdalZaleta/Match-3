@@ -72,6 +72,41 @@ namespace Mangos
                 }
             }
         }
+
+        
+
+        public void OnCandyPicked()
+        {
+
+        }
+
+        public void OnCandyHover()
+        {
+            //Por ahora no hace nada
+        }
+
+        public void OnCandyDropped()
+        {
+
+        }
+
+        public void OnGridStart(int[][] _grid)
+        {
+
+        }
+
+        public void OnMatch(int[][] _grid)
+        {
+
+        }
+
+        public void OnCandySpawn(int[][] _grid)
+        {
+
+        }
+
+        
+        
     }
 }
 
