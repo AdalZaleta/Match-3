@@ -49,11 +49,12 @@ public class MakeMap : MonoBehaviour {
 			for(int x = 0 ; x < columnas; x++)
 			{
 				espejo[w][x] = false;
-				elemento[w][x] = Mathf.FloorToInt(Random.Range(1,4));
+				elemento[w][x] = Random.Range(1,3);
 			}
 		}
 
 		ViewElements();
+		CheckMap();
 		ViewMatchs();
 	}
 
@@ -96,6 +97,95 @@ public class MakeMap : MonoBehaviour {
 	public int GetElement(int fila, int columna)
 	{
 		return elemento[fila][columna];
+	}
+	void CheckMap()
+	{
+		for(int i = 0 ; i < filas; i ++)
+		{
+			for(int j = 0; j < columnas - 1; j++)
+			{
+				if(CheckMatchRow(i,j,1))
+				{
+					espejo[i][j] = true;
+				}
+			}
+		}
+
+		for(int i = 0 ; i < filas - 1; i ++)
+		{
+			for(int j = 0; j < columnas; j++)
+			{
+				if(CheckMatchColumn(i,j,1))
+				{
+					espejo[i][j] = true;
+				}
+			}
+		}
+	}
+
+	public bool CheckMatchRow(int _for, int _cor, int _contador)
+	{
+		if(_cor < columnas - 1)
+		{
+			if(elemento[_for][_cor] == elemento[_for][_cor+1])
+			{
+				if(CheckMatchRow(_for, _cor + 1, _contador + 1))
+				{
+					espejo[_for][_cor] = true;
+					return true;
+				}
+			}
+			else
+			{
+				if(_contador > 2)
+				{
+					espejo[_for][_cor] = true;
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
+		if(_contador > 2)
+		{
+			espejo[_for][_cor] = true;
+			return true;
+		}
+		return false;
+	}
+	public bool CheckMatchColumn(int _for, int _cor, int _contador)
+	{
+		if(_for < filas - 1)
+		{
+			if(elemento[_for][_cor] == elemento[_for + 1][_cor])
+			{
+				if(CheckMatchColumn(_for + 1, _cor, _contador + 1))
+				{
+					espejo[_for][_cor] = true;
+					return true;
+				}
+			}
+			else
+			{
+				if(_contador > 2)
+				{
+					espejo[_for][_cor] = true;
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
+		if(_contador > 2)
+		{
+			espejo[_for][_cor] = true;
+			return true;
+		}
+		return false;
 	}
 	public bool CheckMatch(int _for, int _cor, int _contador)
 	{

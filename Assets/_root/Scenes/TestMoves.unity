@@ -309,7 +309,7 @@ GameObject:
   m_Layer: 0
   m_Name: Fire
   m_TagString: Untagged
-  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -350,7 +350,7 @@ GameObject:
   m_Layer: 0
   m_Name: GridStructure
   m_TagString: Untagged
-  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -366,7 +366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   filas: 5
-  columnas: 3
+  columnas: 5
   startPosition: {fileID: 703242946}
   pivotes: {fileID: 1092955535284120, guid: 2f262eced0ec9ed4f9070b049f62f212, type: 2}
   contenedorColumnas: {fileID: 468512193}
