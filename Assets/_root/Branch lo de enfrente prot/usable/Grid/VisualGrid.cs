@@ -74,7 +74,6 @@ namespace Mangos
                     if (candyMatrix[i][j] != null)
                         PoolManager.Despawn(candyMatrix[i][j]);
 
-                    Debug.Log(candies.Length + ", and " + matrix[i][j]);
                     Transform candy = PoolManager.Spawn(candies[matrix[i][j]], grid.CellToWorld(new Vector3Int(i, j, 0)) + grid.cellSize/2, Quaternion.identity);
                     candyMatrix[i][j] = candy.gameObject;
                 }
@@ -108,7 +107,6 @@ namespace Mangos
             Vector3 candyPos = candyMatrix[m_pickedCor.x][m_pickedCor.y].transform.position;
             mousePos.z = grid.gameObject.transform.position.z - 2;
             candyMatrix[m_pickedCor.x][m_pickedCor.y].transform.position += (mousePos - candyPos) * Time.deltaTime * 15;
-            Debug.Log((mousePos - candyPos) * 0.6f * Time.deltaTime);
         }
 
         public void OnCandyHover()

@@ -16,7 +16,7 @@ namespace Mangos
 			Manager_Static.inputManager = this;
 		}
 
-        bool holding;
+        bool holding = false;
 
 		void Update()
 		{
