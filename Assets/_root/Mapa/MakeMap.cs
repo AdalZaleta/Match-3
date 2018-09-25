@@ -49,13 +49,29 @@ public class MakeMap : MonoBehaviour {
 			for(int x = 0 ; x < columnas; x++)
 			{
 				espejo[w][x] = false;
-				elemento[w][x] = Random.Range(1,3);
+				elemento[w][x] = Random.Range(1,5);
 			}
 		}
 
 		ViewElements();
 		CheckMap();
 		ViewMatchs();
+		ClearMap();
+		ViewElements();
+	}
+
+	void ClearMap()
+	{
+		for(int i = 0; i < filas; i++)
+		{
+			for(int j = 0; j < columnas; j++)
+			{
+				if(espejo[i][j])
+				{
+					elemento[i][j] = 0;
+				}
+			}
+		}
 	}
 
 	void ViewElements()
