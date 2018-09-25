@@ -412,9 +412,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b288ae00b3dd6d544817c53c955f729c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Grid: {fileID: 1939778417}
-  filas: 6
-  columnas: 8
+  Grid: {fileID: 1939778419}
+  filas: 8
+  columnas: 6
   startPosition: {fileID: 703242946}
   pivotes: {fileID: 1092955535284120, guid: 2f262eced0ec9ed4f9070b049f62f212, type: 2}
   contenedorColumnas: {fileID: 468512193}
@@ -520,11 +520,6 @@ Transform:
   m_Father: {fileID: 703242946}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1939778417 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1553346466866268, guid: 95a14515df8114341a9ae84fdce0dfd9,
-    type: 2}
-  m_PrefabInternal: {fileID: 1439280818}
 --- !u!114 &1939778419 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114985804414962394, guid: 95a14515df8114341a9ae84fdce0dfd9,

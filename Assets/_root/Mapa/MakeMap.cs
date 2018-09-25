@@ -46,16 +46,10 @@ namespace Mangos
                         elemento[w, x] = Random.Range(1, 9);
                     }
                 }
+				CheckMap();
             } while ( ViewMatchs() || limit < 50);
 
-
-            ViewElements();
-			CheckMap();
 			Grid.Setup(elemento);
-			ViewMatchs();
-			ClearMap();
-			ViewElements();
-            Grid.UpdateMatrix(elemento);
 		}
 
 		void ClearMap()
