@@ -16,21 +16,19 @@ namespace Mangos
 
         //Testing
         public int x, y, z;
-        private int[][] matrix;
-        private GameObject[][] candyMatrix;
+        private int[,] matrix;
+        private GameObject[,] candyMatrix;
 
         void Start()
         {
-            matrix = new int[width][];
-            candyMatrix = new GameObject[width][];
+            matrix = new int[width,height];
+            candyMatrix = new GameObject[width,height];
             for (int i = 0; i < width; i++)
             {
-                matrix[i] = new int[height];
-                candyMatrix[i] = new GameObject[height];
                 //this is for thessthingg
                 for (int j = 0; j < height; j++)
                 {
-                    matrix[i][j] = Random.Range(0, candies.Length);
+                    matrix[i,j] = 0;
                 }
             }
 
@@ -50,7 +48,7 @@ namespace Mangos
             }
         }
 
-        public void UpdateMatrixTesting(/* int[][] mat*/)
+        public void UpdateMatrixTesting(/* int[,] mat*/)
         {
             //TODO: save matrix
 
@@ -59,13 +57,13 @@ namespace Mangos
             {
                 for (int j = 0; j < height; j++)
                 {
-                    matrix[i][j] = Random.Range(0, candies.Length);
+                    matrix[i,j] = Random.Range(0, candies.Length);
                 }
             }
             RedrawGrid();
         }
 
-        public void UpdateMatrix(int[][] mat)
+        public void UpdateMatrix(int[,] mat)
         {
             matrix = mat;
             RedrawGrid();
@@ -73,15 +71,15 @@ namespace Mangos
 
         void RedrawGrid()
         {
-            for(int i = 0; i < matrix.Length; i++)
+            for(int i = 0; i < matrix.GetLength(1); i++)
             {
-                for(int j = 0; j < matrix[i].Length; j++)
+                for(int j = 0; j < matrix.GetLength(0); j++)
                 {
-                    if (candyMatrix[i][j] != null)
-                        PoolManager.Despawn(candyMatrix[i][j]);
+                    if (candyMatrix[i,j] != null)
+                        PoolManager.Despawn(candyMatrix[i,j]);
 
-                    Transform candy = PoolManager.Spawn(candies[matrix[i][j]], grid.CellToWorld(new Vector3Int(i, j, 0)) + grid.cellSize/2 + Vector3.Scale(transform.position, Vector3.forward), Quaternion.identity);
-                    candyMatrix[i][j] = candy.gameObject;
+                    Transform candy = PoolManager.Spawn(candies[matrix[i,j]], grid.CellToWorld(new Vector3Int(i, j, 0)) + grid.cellSize/2 + Vector3.Scale(transform.position, Vector3.forward), Quaternion.identity);
+                    candyMatrix[i,j] = candy.gameObject;
                 }
             }
         }
@@ -93,7 +91,7 @@ namespace Mangos
             {
                 for(int j = 0; j < height; j++)
                 {
-                    if(candyMatrix[i][j] == picked)
+                    if(candyMatrix[i,j] == picked)
                     {
                         m_pickedCor = new Vector2Int(i, j);
                         broke = true;
@@ -110,9 +108,9 @@ namespace Mangos
 
         public void OnCandyHold(Vector3 mousePos)
         {
-            Vector3 candyPos = candyMatrix[m_pickedCor.x][m_pickedCor.y].transform.position;
+            Vector3 candyPos = candyMatrix[m_pickedCor.x,m_pickedCor.y].transform.position;
             mousePos.z = grid.gameObject.transform.position.z - 2;
-            candyMatrix[m_pickedCor.x][m_pickedCor.y].transform.position += (mousePos - candyPos) * Time.deltaTime * 15;
+            candyMatrix[m_pickedCor.x,m_pickedCor.y].transform.position += (mousePos - candyPos) * Time.deltaTime * 15;
         }
 
         public void OnCandyHover()
@@ -129,17 +127,17 @@ namespace Mangos
             }
         }
 
-        public void OnGridStart(int[][] _grid)
+        public void OnGridStart(int[,] _grid)
         {
 
         }
 
-        public void OnMatch(int[][] _grid)
+        public void OnMatch(int[,] _grid)
         {
 
         }
 
-        public void OnCandySpawn(int[][] _grid)
+        public void OnCandySpawn(int[,] _grid)
         {
 
         }
@@ -151,11 +149,11 @@ namespace Mangos
             Vector3 destination = grid.CellToWorld(new Vector3Int(m_dropedCor.x, m_dropedCor.y, 0)) + grid.cellSize/2;
             while (notHome)
             {
-                Vector3 dir = (destination) - candyMatrix[m_dropedCor.x][m_dropedCor.y].transform.position;
-                candyMatrix[m_dropedCor.x][m_dropedCor.y].transform.position += dir * Time.deltaTime * 10;
+                Vector3 dir = (destination) - candyMatrix[m_dropedCor.x,m_dropedCor.y].transform.position;
+                candyMatrix[m_dropedCor.x,m_dropedCor.y].transform.position += dir * Time.deltaTime * 10;
                 if (dir.magnitude <= 0.01f)
                 {
-                    candyMatrix[m_dropedCor.x][m_dropedCor.y].transform.position = destination;
+                    candyMatrix[m_dropedCor.x,m_dropedCor.y].transform.position = destination;
                     notHome = false;
                 }
                 yield return null;
