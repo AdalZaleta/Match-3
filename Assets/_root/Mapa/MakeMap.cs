@@ -7,7 +7,7 @@ public enum Elements
 	FIRE,
 	WATER,
 	EARTH,
-	AIR	
+	AIR
 }
 
 namespace Mangos
@@ -30,11 +30,10 @@ namespace Mangos
 		int m_contador = 1;
 
 
-		void Start () 
+		void Start ()
 		{
 			espejo = new bool[filas,columnas];
 			elemento= new int[filas,columnas];
-
             int limit = 0;
   
             
@@ -48,15 +47,10 @@ namespace Mangos
                         elemento[w, x] = Random.Range(1, 9);
                     }
                 }
+		CheckMap();
+            } while ( ViewMatchs() || limit < 50);
 
-
-            ViewElements();
-			CheckMap();
-		    Grid.Setup(elemento);
-			ViewMatchs();
-			ClearMap();
-			ViewElements();
-            Grid.UpdateMatrix(elemento);
+			Grid.Setup(elemento);
 		}
 
 		void ClearMap()
@@ -84,15 +78,18 @@ namespace Mangos
 			}
 		}
 
-		void ViewMatchs()
+		bool ViewMatchs()
 		{
 			for(int w = 0 ; w < filas; w++)
 			{
 				for(int x = 0 ; x < columnas; x++)
 				{
-					Debug.Log("Valor de ["+w+"]["+x+"]: " + espejo[w,x]);
+					if(espejo[w,x])
+						return true;
+
 				}
 			}
+			return false;
 		}
 
 		public void SelectPiece(int _fila, int _columna)
