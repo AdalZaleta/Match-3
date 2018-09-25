@@ -21,22 +21,21 @@ namespace Mangos
 
         void Start()
         {
-            matrix = new int[width,height];
-            candyMatrix = new GameObject[width,height];
-            for (int i = 0; i < width; i++)
-            {
-                //this is for thessthingg
-                for (int j = 0; j < height; j++)
-                {
-                    matrix[i,j] = 0;
-                }
-            }
+            
+        }
 
+        public void Setup(int[,] mat)
+        {
+            matrix = mat;
+            width = matrix.GetLength(0);
+            height = matrix.GetLength(1);
+            candyMatrix = new GameObject[width, height];
 
-            for(int i = 0; i < candies.Length; i++)
+            for (int i = 0; i < candies.Length; i++)
             {
                 PoolManager.MakePool(candies[i], 50);
             }
+            RedrawGrid();
         }
 
         void Update()
@@ -71,9 +70,9 @@ namespace Mangos
 
         void RedrawGrid()
         {
-            for(int i = 0; i < matrix.GetLength(1); i++)
+            for(int i = 0; i < matrix.GetLength(0); i++)
             {
-                for(int j = 0; j < matrix.GetLength(0); j++)
+                for(int j = 0; j < matrix.GetLength(1); j++)
                 {
                     if (candyMatrix[i,j] != null)
                         PoolManager.Despawn(candyMatrix[i,j]);
