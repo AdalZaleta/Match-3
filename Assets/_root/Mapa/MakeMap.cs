@@ -36,8 +36,9 @@ namespace Mangos
 			elemento= new int[filas,columnas];
 
             int limit = 0;
-            do
-            {
+  
+            
+
                 limit++;
                 for (int w = 0; w < filas; w++)
                 {
@@ -47,12 +48,11 @@ namespace Mangos
                         elemento[w, x] = Random.Range(1, 9);
                     }
                 }
-            } while ( CheckMap() || limit < 50);
 
 
             ViewElements();
 			CheckMap();
-			Grid.Setup(elemento);
+		    Grid.Setup(elemento);
 			ViewMatchs();
 			ClearMap();
 			ViewElements();
