@@ -4,15 +4,19 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-namespace TAAI
+namespace Mangos
 {
 	public class Manager_Input : MonoBehaviour {
+
+        public VisualGrid visualGrid;
 
 		void Awake()
 		{
             //SE OCUOPA DECIRLEA AL MANAGER STATIC QUIEN ES SI MANAGER DE INPUTS
 			Manager_Static.inputManager = this;
 		}
+
+        bool holding = false;
 
 		void Update()
 		{
@@ -31,6 +35,30 @@ namespace TAAI
             //ENTRA EN ESTE IF SI EL ESTADO DE LA APLICACION DE LA APLIACION ESTA EN GAMEPLAY
             else if (Manager_Static.appManager.currentState == AppState.GAMEPLAY)
             {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Ray ray;
+                    ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit hit;
+                    if(Physics.Raycast(ray, out hit))
+                    {
+                        if (hit.collider.CompareTag("Candy"))
+                        {
+                            visualGrid.OnCandyPicked(hit.collider.gameObject);
+                            holding = true;
+                            Debug.Log("Candy hit");
+                        }
+                    }
+                }
+                else if (Input.GetMouseButton(0) && holding)
+                {
+                    visualGrid.OnCandyHold(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                }
+                else if (Input.GetMouseButtonUp(0))
+                {
+                    holding = false;
+                    visualGrid.OnCandyDropped();
+                }
 			}
 
             //ENTRA EN ESTE IF SI EL ESTADO DE LA APLICACION DE LA APLIACION ESTA EN FIN DEL JUEGO
