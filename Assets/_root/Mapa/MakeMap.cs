@@ -48,7 +48,7 @@ namespace Mangos
 			Grid.GetComponent<VisualGrid>().UpdateMatrix(elemento);
 			ViewMatchs();
 			ClearMap();
-			ViewElements();
+			//ViewElements();
 		}
 
 		void ClearMap()
@@ -76,15 +76,18 @@ namespace Mangos
 			}
 		}
 
-		void ViewMatchs()
+		bool ViewMatchs()
 		{
 			for(int w = 0 ; w < filas; w++)
 			{
 				for(int x = 0 ; x < columnas; x++)
 				{
-					Debug.Log("Valor de ["+w+"]["+x+"]: " + espejo[w,x]);
+					if(espejo[w,x])
+						return true;
+
 				}
 			}
+			return false;
 		}
 
 		public void SelectPiece(int _fila, int _columna)
