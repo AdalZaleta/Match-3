@@ -48,11 +48,16 @@ namespace Mangos
                             holding = true;
                             Debug.Log("Candy hit");
                         }
+                        else
+                        {
+                            Debug.Log("Candy not hit");
+                        }
                     }
                 }
                 else if (Input.GetMouseButton(0) && holding)
                 {
                     visualGrid.OnCandyHold(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                    Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
                 }
                 else if (Input.GetMouseButtonUp(0) && holding)
                 {
