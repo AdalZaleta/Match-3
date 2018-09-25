@@ -46,11 +46,11 @@ namespace Mangos
             //Testing
             if (Input.GetKeyDown(KeyCode.U))
             {
-                UpdateMatrix();
+                UpdateMatrixTesting();
             }
         }
 
-        public void UpdateMatrix(/* int[][] mat*/)
+        public void UpdateMatrixTesting(/* int[][] mat*/)
         {
             //TODO: save matrix
 
@@ -62,6 +62,12 @@ namespace Mangos
                     matrix[i][j] = Random.Range(0, candies.Length);
                 }
             }
+            RedrawGrid();
+        }
+
+        public void UpdateMatrix(int[][] mat)
+        {
+            matrix = mat;
             RedrawGrid();
         }
 
