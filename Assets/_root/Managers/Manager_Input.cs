@@ -54,7 +54,7 @@ namespace Mangos
                 {
                     visualGrid.OnCandyHold(Camera.main.ScreenToWorldPoint(Input.mousePosition));
                 }
-                else if (Input.GetMouseButtonUp(0))
+                else if (Input.GetMouseButtonUp(0) && holding)
                 {
                     holding = false;
                     visualGrid.OnCandyDropped();
