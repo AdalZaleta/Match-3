@@ -27,9 +27,12 @@ namespace Mangos
 		}
 
         //ES UN METODO PARA CARGAR LA ESCENA POR SU NOMBRE
-		public void LoadSceneName(string _name)
+		public void LoadScene(string _name, bool _isAdditive)
 		{
-			SceneManager.LoadScene(_name);
+            if (_isAdditive)
+			    SceneManager.LoadScene(_name, LoadSceneMode.Additive);
+            if (!_isAdditive)
+                SceneManager.LoadScene(_name);
 		}
 
         //ES UN METODO QUE TERMINA LA APLICACION

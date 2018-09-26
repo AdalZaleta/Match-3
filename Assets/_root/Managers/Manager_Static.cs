@@ -13,7 +13,8 @@ namespace Mangos
         MAIN_MENU,
         GAMEPLAY,
         PAUSE_MENU,
-        END_GAME,
+        GAME_END,
+        SCORES,
         CREDITS
     }
 
@@ -22,9 +23,9 @@ namespace Mangos
     {
         ENDLESS,
         POINTS,
-        MOVE_LIMIT
+        MOVE_LIMIT,
+        TIMEBASED
     }
-
 
     //ESTE SE ENCARGARA DE MANTENER A LOS DEMAS MANAGER COMUNICADOS ENTRE ELLOS
 	public static class Manager_Static 
@@ -34,5 +35,6 @@ namespace Mangos
 		public static Manager_Scene sceneManager;
         public static Manager_Audio audioManager;
         public static Manager_Saves savesManager;
+        public static Manager_Scores scoreManager;
 	}
 }
