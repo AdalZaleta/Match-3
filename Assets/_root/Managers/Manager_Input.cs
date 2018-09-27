@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-namespace TAAI
+namespace Mangos
 {
 	public class Manager_Input : MonoBehaviour {
 
@@ -34,7 +34,7 @@ namespace TAAI
 			}
 
             //ENTRA EN ESTE IF SI EL ESTADO DE LA APLICACION DE LA APLIACION ESTA EN FIN DEL JUEGO
-            else if (Manager_Static.appManager.currentState == AppState.END_GAME)
+            else if (Manager_Static.appManager.currentState == AppState.GAME_END)
             {
 			}
 		}
