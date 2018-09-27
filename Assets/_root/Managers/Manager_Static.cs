@@ -24,12 +24,11 @@ namespace Mangos
         ENDLESS,
         POINTS,
         MOVE_LIMIT,
-        TIME_LIMIT
+        TIMEBASED
     }
 
-
     //ESTE SE ENCARGARA DE MANTENER A LOS DEMAS MANAGER COMUNICADOS ENTRE ELLOS
-	public static class Manager_Static 
+	public static class Manager_Static
 	{
 		public static Manager_Input inputManager;
 		public static Manager_App appManager;
@@ -37,5 +36,7 @@ namespace Mangos
         public static Manager_Audio audioManager;
         public static Manager_GameMode gameModeManager;
         public static Manager_GameState gameStateManager;
+        public static Manager_Saves savesManager;
+        public static Manager_Scores scoreManager;
 	}
 }
