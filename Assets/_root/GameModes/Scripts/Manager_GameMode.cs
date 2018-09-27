@@ -25,7 +25,7 @@ namespace Mangos
 
         public void SetLimitedTime()
         {
-            Manager_Static.gameModeManager.currentGameState = ModeGame.TIME_LIMIT;
+            Manager_Static.gameModeManager.currentGameState = ModeGame.TIMEBASED;
         }
 
         public void SetLimitedMoves()

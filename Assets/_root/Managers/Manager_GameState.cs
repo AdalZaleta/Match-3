@@ -42,7 +42,7 @@ namespace Mangos
             }
 
             //Game Mode de LIMITED TIME
-            else if (Manager_Static.gameModeManager.currentGameState == ModeGame.TIME_LIMIT)
+            else if (Manager_Static.gameModeManager.currentGameState == ModeGame.TIMEBASED)
             {
                 LimitedTime();
             }
@@ -82,9 +82,9 @@ namespace Mangos
         {
             if(_moveMaded == true)
             {
-                if (Manager_Static.gameModeManager.currentGameState == ModeGame.MOVE_LIMIT)
+                if (Manager_Static.gameModeManager.currentGameState == ModeGame.TIMEBASED)
                     moves--;
-                else if (Manager_Static.gameModeManager.currentGameState == ModeGame.TIME_LIMIT)
+                else if (Manager_Static.gameModeManager.currentGameState == ModeGame.TIMEBASED)
                     time = time + timeToAdd; 
             }
         }
