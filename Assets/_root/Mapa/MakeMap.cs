@@ -62,6 +62,7 @@ namespace Mangos
 					if(espejo[i,j])
 					{
 						elemento[i,j] = 0;
+						espejo[i,j] = false;
 					}
 				}
 			}
@@ -109,6 +110,7 @@ namespace Mangos
 			if(ViewMatchs())
 			{
 				ClearMap();
+				MakeGravity();
 				Grid.UpdateMatrix(elemento);
 				return true;
 			}
@@ -146,6 +148,39 @@ namespace Mangos
 			}
 		}
 
+		public void MakeGravity()
+		{
+			Debug.Log("Entre a MakeGravity()");
+			bool listo = false, done = true;
+			int temp = 0, j = columnas - 1, limitehardcode = 0;
+			for(int i = 0; i < filas; i++)
+			{
+				limitehardcode = 0;
+				listo = false;
+				done = true;
+				while(!listo && limitehardcode < 50)
+				{
+					Debug.Log("i: " + i + "j: " + j);
+					if(elemento[i,j] != 0 && elemento[i,j-1] == 0)
+					{
+						done = false;
+						temp = elemento[i,j];
+						elemento[i,j] = elemento[i,j-1];
+						elemento[i,j-1] = temp;
+					}
+					j--;
+					if(j < 1)
+					{
+						j = columnas - 1;
+						if(done)
+						{
+							listo = true;
+						}
+					}
+					limitehardcode ++;
+				}
+			}
+		}
 		public bool CheckMatchRow(int _for, int _cor, int _contador)
 		{
 			if(_cor < columnas - 1)
