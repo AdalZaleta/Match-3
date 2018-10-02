@@ -4,6 +4,14 @@ using UnityEngine;
 
 namespace Mangos
 {
+    struct pickAndDrop
+    {
+        public Vector2Int pickedCor;
+        public Vector2Int droppedCor;
+        public Vector3 destination;
+        public bool goingHome;
+    }
+
     public class VisualGrid : MonoBehaviour
     {
         public int width;
@@ -13,6 +21,7 @@ namespace Mangos
 
         private Vector2Int m_pickedCor;
         private Vector2Int m_dropedCor;
+        private pickAndDrop picksAndDrops;
 
         //Testing
         public int x, y, z;
@@ -21,7 +30,7 @@ namespace Mangos
 
         void Start()
         {
-            
+            picksAndDrops = new pickAndDrop();
         }
 
         public void Setup(int[,] mat)
@@ -45,6 +54,7 @@ namespace Mangos
             {
                 UpdateMatrixTesting();
             }
+           
         }
 
         public void UpdateMatrixTesting(/* int[,] mat*/)
@@ -85,14 +95,17 @@ namespace Mangos
 
         public void OnCandyPicked(GameObject picked)
         {
+            
             bool broke = false;
-            for(int i = 0; i < width; i++)
+            for (int i = 0; i < width; i++)
             {
-                for(int j = 0; j < height; j++)
+                for (int j = 0; j < height; j++)
                 {
-                    if(candyMatrix[i,j] == picked)
+                    if (candyMatrix[i, j] == picked)
                     {
-                        m_pickedCor = new Vector2Int(i, j);
+                        picksAndDrops.pickedCor = new Vector2Int(i, j);
+                        picksAndDrops.destination = grid.CellToWorld(new Vector3Int(i, j, 0)) + grid.cellSize / 2;
+                        picksAndDrops.goingHome = false;
                         broke = true;
                         Debug.Log("Se agarró el " + i + ", " + j);
                         break;
@@ -101,15 +114,18 @@ namespace Mangos
                 if (broke)
                     break;
             }
+            
 
             //Llamat al script de adal para decirle cual agarre
         }
 
         public void OnCandyHold(Vector3 mousePos)
         {
-            Vector3 candyPos = candyMatrix[m_pickedCor.x,m_pickedCor.y].transform.position;
+            //Vector3 candyPos = candyMatrix[m_pickedCor.x, m_pickedCor.y].transform.position;
+            Vector3 candyPos = candyMatrix[picksAndDrops.pickedCor.x, picksAndDrops.pickedCor.y].transform.position;
             mousePos.z = grid.gameObject.transform.position.z - 2;
-            candyMatrix[m_pickedCor.x,m_pickedCor.y].transform.position += (mousePos - candyPos) * Time.deltaTime * 15;
+            //candyMatrix[m_pickedCor.x, m_pickedCor.y].transform.position += (mousePos - candyPos) * Time.deltaTime * 15;
+            candyMatrix[picksAndDrops.pickedCor.x, picksAndDrops.pickedCor.y].transform.position += (mousePos - candyPos) * Time.deltaTime * 15;
         }
 
         public void OnCandyHover()
@@ -119,10 +135,9 @@ namespace Mangos
 
         public void OnCandyDropped()
         {
-            m_dropedCor = m_pickedCor;
-            if (true)
+            if (true) //if en donde pregunto que rollo con los matches
             {
-                StartCoroutine("CandyGoesHome");
+                StartCoroutine("CandyGoesHome", picksAndDrops.pickedCor); 
             }
         }
 
@@ -142,17 +157,17 @@ namespace Mangos
         }
 
 
-        IEnumerator CandyGoesHome()
+        IEnumerator CandyGoesHome(Vector2Int dropedCor)
         {
             bool notHome = true;
-            Vector3 destination = grid.CellToWorld(new Vector3Int(m_dropedCor.x, m_dropedCor.y, 0)) + grid.cellSize/2;
+            Vector3 destination = grid.CellToWorld(new Vector3Int(dropedCor.x, dropedCor.y, 0)) + grid.cellSize / 2;
             while (notHome)
             {
-                Vector3 dir = (destination) - candyMatrix[m_dropedCor.x,m_dropedCor.y].transform.position;
-                candyMatrix[m_dropedCor.x,m_dropedCor.y].transform.position += dir * Time.deltaTime * 10;
+                Vector3 dir = (destination) - candyMatrix[dropedCor.x, dropedCor.y].transform.position;
+                candyMatrix[dropedCor.x, dropedCor.y].transform.position += dir * Time.deltaTime * 10;
                 if (dir.magnitude <= 0.01f)
                 {
-                    candyMatrix[m_dropedCor.x,m_dropedCor.y].transform.position = destination;
+                    candyMatrix[dropedCor.x, dropedCor.y].transform.position = destination;
                     notHome = false;
                 }
                 yield return null;

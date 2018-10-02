@@ -35,8 +35,9 @@ namespace Mangos
 			espejo = new bool[filas,columnas];
 			elemento= new int[filas,columnas];
             int limit = 0;
-            do
-            {
+
+
+            do { 
                 limit++;
                 for (int w = 0; w < filas; w++)
                 {
@@ -46,7 +47,7 @@ namespace Mangos
                         elemento[w, x] = Random.Range(1, 9);
                     }
                 }
-				CheckMap();
+		        CheckMap();
             } while ( ViewMatchs() || limit < 50);
 
 			Grid.Setup(elemento);
