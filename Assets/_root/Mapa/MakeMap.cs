@@ -98,7 +98,7 @@ namespace Mangos
 			_actC = _columna;
 		}
 
-		public void MakeMove(int _for, int _cor, int _fob, int _cob)
+		public bool MakeMove(int _for, int _cor, int _fob, int _cob)
 		{
 			int temp = 0;
 			temp = elemento[_for,_cor];
@@ -110,11 +110,12 @@ namespace Mangos
 			{
 				ClearMap();
 				Grid.UpdateMatrix(elemento);
-				return;
+				return true;
 			}
-			temp = elemento[_for,_cor];
-			elemento[_for,_cor] = elemento[_fob,_cob];
-			elemento[_fob,_cob] = temp;
+			elemento[_fob,_cob] = elemento[_for,_cor];
+			elemento[_for,_cor] = temp;
+			Grid.UpdateMatrix(elemento);
+			return false;
 		}
 		public int GetElement(int fila, int columna)
 		{
