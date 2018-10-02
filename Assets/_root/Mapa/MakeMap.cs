@@ -104,7 +104,17 @@ namespace Mangos
 			temp = elemento[_for,_cor];
 			elemento[_for,_cor] = elemento[_fob,_cob];
 			elemento[_fob,_cob] = temp;
-
+			Grid.UpdateMatrix(elemento);
+			CheckMap();
+			if(ViewMatchs())
+			{
+				ClearMap();
+				Grid.UpdateMatrix(elemento);
+				return;
+			}
+			temp = elemento[_for,_cor];
+			elemento[_for,_cor] = elemento[_fob,_cob];
+			elemento[_fob,_cob] = temp;
 		}
 		public int GetElement(int fila, int columna)
 		{
