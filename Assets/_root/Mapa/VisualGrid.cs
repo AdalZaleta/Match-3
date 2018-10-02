@@ -18,6 +18,7 @@ namespace Mangos
         public int height;
         public GameObject[] candies; //Los prefabs de cada 'dulce' que va a haber
         public Grid grid;
+        public MakeMap makeMap;
 
         private Vector2Int m_pickedCor;
         private Vector2Int m_dropedCor;
@@ -107,7 +108,6 @@ namespace Mangos
                         picksAndDrops.destination = grid.CellToWorld(new Vector3Int(i, j, 0)) + grid.cellSize / 2;
                         picksAndDrops.goingHome = false;
                         broke = true;
-                        Debug.Log("Se agarró el " + i + ", " + j);
                         break;
                     }
                 }
@@ -135,10 +135,16 @@ namespace Mangos
 
         public void OnCandyDropped()
         {
-            if (true) //if en donde pregunto que rollo con los matches
+            Vector3Int droppedOn = grid.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            if (droppedOn.x >= 0 && droppedOn.y >= 0 && droppedOn.x < width && droppedOn.y < height) //if en donde pregunto que rollo con los matches
+            {
+                makeMap.MakeMove(picksAndDrops.pickedCor.x, picksAndDrops.pickedCor.y, droppedOn.x, droppedOn.y);
+            }
+            else
             {
                 StartCoroutine("CandyGoesHome", picksAndDrops.pickedCor); 
             }
+            Debug.Log(grid.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
         }
 
         public void OnGridStart(int[,] _grid)

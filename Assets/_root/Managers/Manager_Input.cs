@@ -46,7 +46,6 @@ namespace Mangos
                         {
                             visualGrid.OnCandyPicked(hit.collider.gameObject);
                             holding = true;
-                            Debug.Log("Candy hit");
                         }
                         else
                         {
@@ -57,7 +56,6 @@ namespace Mangos
                 else if (Input.GetMouseButton(0) && holding)
                 {
                     visualGrid.OnCandyHold(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-                    Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
                 }
                 else if (Input.GetMouseButtonUp(0) && holding)
                 {
