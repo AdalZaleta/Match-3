@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4747077265683216}
   - component: {fileID: 65698951035921150}
+  - component: {fileID: 114403941259299528}
   m_Layer: 0
   m_Name: CauldronCandy
   m_TagString: Candy
@@ -203,6 +204,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114403941259299528
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1302922978528992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99a093e885ae07142971e307caeec840, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particles: {fileID: 0}
 --- !u!212 &212116581846766026
 SpriteRenderer:
   m_ObjectHideFlags: 1

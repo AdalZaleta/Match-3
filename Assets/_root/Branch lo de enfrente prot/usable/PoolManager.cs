@@ -66,6 +66,15 @@ namespace Mangos
 				poolLimit.Add(prefab.GetInstanceID(), newLimit);
 			}
 		}
+
+        public static int GetPoolLimit(GameObject prefab)
+        {
+            if (poolLimit.ContainsKey(prefab.GetInstanceID()))
+            {
+                return poolLimit[prefab.GetInstanceID()];
+            }
+            return 0;
+        }
 		
 		public static void SetPoolRecycle(GameObject prefab, bool recycle)
 		{

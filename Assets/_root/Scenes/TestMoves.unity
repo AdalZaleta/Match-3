@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657886, g: 0.4964127, b: 0.57481724, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -325,7 +325,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 524726262}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 1.52, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -428,11 +428,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114985804414962394, guid: 95a14515df8114341a9ae84fdce0dfd9,
-        type: 2}
-      propertyPath: candies.Array.size
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 4422351299945698, guid: 95a14515df8114341a9ae84fdce0dfd9, type: 2}
       propertyPath: m_LocalPosition.x
       value: -1
@@ -465,17 +460,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114985804414962394, guid: 95a14515df8114341a9ae84fdce0dfd9,
-        type: 2}
-      propertyPath: candies.Array.data[9]
-      value: 
-      objectReference: {fileID: 1081139223745380, guid: 9ee8959d362251e4fae552651def33b5,
-        type: 2}
-    - target: {fileID: 114985804414962394, guid: 95a14515df8114341a9ae84fdce0dfd9,
-        type: 2}
-      propertyPath: candies.Array.data[0]
-      value: 
-      objectReference: {fileID: 100000, guid: c7a910b84cbbe4c4784a22ddfc08e948, type: 3}
     - target: {fileID: 114985804414962394, guid: 95a14515df8114341a9ae84fdce0dfd9,
         type: 2}
       propertyPath: makeMap
