@@ -76,7 +76,7 @@ namespace Mangos
         public void UpdateMatrix(int[,] mat)
         {
             matrix = mat;
-            RedrawGrid();
+            //RedrawGrid();
         }
 
         void RedrawGrid()
@@ -138,7 +138,16 @@ namespace Mangos
             Vector3Int droppedOn = grid.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             if (droppedOn.x >= 0 && droppedOn.y >= 0 && droppedOn.x < width && droppedOn.y < height) //if en donde pregunto que rollo con los matches
             {
-                makeMap.MakeMove(picksAndDrops.pickedCor.x, picksAndDrops.pickedCor.y, droppedOn.x, droppedOn.y);
+                if(makeMap.MakeMove(picksAndDrops.pickedCor.x, picksAndDrops.pickedCor.y, droppedOn.x, droppedOn.y))
+                {
+                    Debug.Log("Was true");
+                    StartCoroutine("CanySwapsHome", new Vector4(picksAndDrops.pickedCor.x, picksAndDrops.pickedCor.y, droppedOn.x, droppedOn.y));
+                    StartCoroutine("CanySwapsHome", new Vector4(droppedOn.x, droppedOn.y, picksAndDrops.pickedCor.x, picksAndDrops.pickedCor.y));
+                }
+                else
+                {
+                    StartCoroutine("CandyGoesHome", picksAndDrops.pickedCor);
+                }
             }
             else
             {
@@ -178,6 +187,39 @@ namespace Mangos
                 }
                 yield return null;
             }
+        }
+
+        IEnumerator CanySwapsHome(Vector4 pickedFrom)
+        {
+            bool notHome1 = true, notHome2 = true;
+            Vector3 destination1 = grid.CellToWorld(new Vector3Int((int)pickedFrom.z, (int)pickedFrom.w, 0)) + grid.cellSize / 2;
+            Vector3 destination2 = grid.CellToWorld(new Vector3Int((int)pickedFrom.x, (int)pickedFrom.y, 0)) + grid.cellSize / 2;
+            while (notHome1 || notHome2)
+            {
+                if (notHome1)
+                {
+                    Vector3 dir = (destination1) - candyMatrix[(int)pickedFrom.x, (int)pickedFrom.y].transform.position;
+                    candyMatrix[(int)pickedFrom.x, (int)pickedFrom.y].transform.position += dir * Time.deltaTime * 10;
+                    if (dir.magnitude <= 0.01f)
+                    {
+                        candyMatrix[(int)pickedFrom.x, (int)pickedFrom.y].transform.position = destination1;
+                        notHome1 = false;
+                    }
+                }
+                if (notHome2)
+                {
+                    Vector3 dir = (destination2) - candyMatrix[(int)pickedFrom.z, (int)pickedFrom.w].transform.position;
+                    candyMatrix[(int)pickedFrom.z, (int)pickedFrom.w].transform.position += dir * Time.deltaTime * 10;
+                    if (dir.magnitude <= 0.01f)
+                    {
+                        candyMatrix[(int)pickedFrom.z, (int)pickedFrom.w].transform.position = destination2;
+                        notHome2 = false;
+                    }
+                }
+                yield return null;
+            }
+            RedrawGrid();
+            //makeMap.MakeGravity();
         }
     }
 }
