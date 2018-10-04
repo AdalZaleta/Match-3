@@ -16,6 +16,7 @@ namespace Mangos
         public float timeToAdd;
         public Text scoreNum;
         public Text timeVal;
+        public Text movesVal;
         public Animator catAnim;
 
         private void Awake()
@@ -50,6 +51,8 @@ namespace Mangos
             else if (Manager_Static.gameModeManager.currentGameState == ModeGame.POINTS)
             {
                 Score();
+                if (m_actualScore >= 1000)
+                    Manager_Static.appManager.SetScores();
             }
 
             //Game Mode de LIMITED TIME
@@ -57,7 +60,9 @@ namespace Mangos
             {
                 LimitedTime();
                 Score();
-                timeVal.text = time.ToString();
+                timeVal.text = time.ToString().Substring(0,2);
+                if(time <= 0)
+                    Manager_Static.appManager.SetScores();
             }
         }
 
@@ -68,7 +73,9 @@ namespace Mangos
 
         public void LimitedMoves()
         {
-            
+            movesVal.text = moves.ToString();
+            if (moves <= 0)
+                Manager_Static.appManager.SetScores();
         }
 
         public void Score()
@@ -88,18 +95,21 @@ namespace Mangos
                 _scoreToAdd = _scoreToAdd * 2;
                 time = time + timeToAdd;
                 catAnim.SetTrigger("Match");
+                moves--;
             }
             else if (_scoreToAdd == 4 || _scoreToAdd == 5)
             {
                 _scoreToAdd = _scoreToAdd * 4;
                 time = time + timeToAdd;
                 catAnim.SetTrigger("Match");
+                moves--;
             }
             else if (_scoreToAdd >= 6)
             {
                 _scoreToAdd = _scoreToAdd * 10;
                 time = time + timeToAdd;
                 catAnim.SetTrigger("Match");
+                moves--;
             }
             else if (_scoreToAdd >= 2)
                 Application.Quit();
