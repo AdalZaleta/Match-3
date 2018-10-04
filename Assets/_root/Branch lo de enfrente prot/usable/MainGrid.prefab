@@ -66,7 +66,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1258602663179596}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.03, y: -3, z: 0}
+  m_LocalPosition: {x: -1, y: -3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4867850580405074}
@@ -114,7 +114,7 @@ MonoBehaviour:
   width: 8
   height: 6
   candies:
-  - {fileID: 1081139223745380, guid: 9ee8959d362251e4fae552651def33b5, type: 2}
+  - {fileID: 100000, guid: c7a910b84cbbe4c4784a22ddfc08e948, type: 3}
   - {fileID: 1075799550023048, guid: b2548b7a8771b2d4ba1a0037a2b938cb, type: 2}
   - {fileID: 1302922978528992, guid: d8d4702e86d62e540b4a7a0a63c31850, type: 2}
   - {fileID: 1793845018220850, guid: 8efda2442b6156240bc58304bc2a76e6, type: 2}
@@ -123,10 +123,10 @@ MonoBehaviour:
   - {fileID: 1492111384662910, guid: 7bf20eb084262fb4fa8014ad9a317c19, type: 2}
   - {fileID: 1456245796374268, guid: 2dd5be3660aa111499c9ccf3ec1efa7d, type: 2}
   - {fileID: 1781192304705948, guid: 02ee63506c8c0044f91d95aedb62caa8, type: 2}
+  - {fileID: 1081139223745380, guid: 9ee8959d362251e4fae552651def33b5, type: 2}
   grid: {fileID: 2569400266548395580}
-  x: 0
-  y: 0
-  z: 0
+  makeMap: {fileID: 0}
+  candyFallAccel: 0.2
 --- !u!212 &212876921813355206
 SpriteRenderer:
   m_ObjectHideFlags: 1

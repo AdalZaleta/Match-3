@@ -19,15 +19,15 @@ namespace Mangos
         public GameObject[] candies; //Los prefabs de cada 'dulce' que va a haber
         public Grid grid;
         public MakeMap makeMap;
+        public float candyFallAccel;
 
         private Vector2Int m_pickedCor;
         private Vector2Int m_dropedCor;
         private pickAndDrop picksAndDrops;
 
-        //Testing
-        public int x, y, z;
         private int[,] matrix;
         private GameObject[,] candyMatrix;
+        private int candyDropFallback, candyDropFallbackCount;
 
         void Start()
         {
@@ -55,6 +55,10 @@ namespace Mangos
             {
                 UpdateMatrixTesting();
             }
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                RedrawGrid();
+            }
            
         }
 
@@ -76,7 +80,7 @@ namespace Mangos
         public void UpdateMatrix(int[,] mat)
         {
             matrix = mat;
-            RedrawGrid();
+            //RedrawGrid();
         }
 
         void RedrawGrid()
@@ -94,6 +98,46 @@ namespace Mangos
             }
         }
 
+        void UpdateCandyMatrix()
+        {
+            Debug.Log("Updating internal game object candy matrix");
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    Vector2Int realPos = CompareToCellCenter(candyMatrix[i, j].transform.position);
+                    if((realPos.x != i || realPos.y != j) && realPos.x != -1)
+                    {
+                        GameObject temp = candyMatrix[i, j];
+                        candyMatrix[i, j] = candyMatrix[realPos.x, realPos.y];
+                        candyMatrix[realPos.x, realPos.y] = temp;
+                    }
+                    else if(realPos.y == -1)
+                    {
+                        Debug.Log("A CANDY WAS NOT IN POSITION");
+                    }
+                }
+            }
+            //RedrawGrid();
+        }
+
+        public Vector2Int CompareToCellCenter(Vector3 pos)
+        {
+            Vector3Int temp = new Vector3Int();
+            temp.z = 0;
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    temp.x = i;
+                    temp.y = j;
+                    if (grid.CellToWorld(temp) + grid.cellSize / 2 == pos)
+                        return new Vector2Int(i, j);
+                }
+            }
+            return new Vector2Int(-1, -1);
+        }
+
         public void OnCandyPicked(GameObject picked)
         {
             
@@ -108,23 +152,20 @@ namespace Mangos
                         picksAndDrops.destination = grid.CellToWorld(new Vector3Int(i, j, 0)) + grid.cellSize / 2;
                         picksAndDrops.goingHome = false;
                         broke = true;
+                        Debug.Log("Picked candy: " + picksAndDrops.pickedCor);
                         break;
                     }
                 }
                 if (broke)
                     break;
             }
-            
 
-            //Llamat al script de adal para decirle cual agarre
         }
 
         public void OnCandyHold(Vector3 mousePos)
         {
-            //Vector3 candyPos = candyMatrix[m_pickedCor.x, m_pickedCor.y].transform.position;
             Vector3 candyPos = candyMatrix[picksAndDrops.pickedCor.x, picksAndDrops.pickedCor.y].transform.position;
             mousePos.z = grid.gameObject.transform.position.z - 2;
-            //candyMatrix[m_pickedCor.x, m_pickedCor.y].transform.position += (mousePos - candyPos) * Time.deltaTime * 15;
             candyMatrix[picksAndDrops.pickedCor.x, picksAndDrops.pickedCor.y].transform.position += (mousePos - candyPos) * Time.deltaTime * 15;
         }
 
@@ -136,15 +177,23 @@ namespace Mangos
         public void OnCandyDropped()
         {
             Vector3Int droppedOn = grid.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            Debug.Log("Candy Dropped On: " + droppedOn);
             if (droppedOn.x >= 0 && droppedOn.y >= 0 && droppedOn.x < width && droppedOn.y < height) //if en donde pregunto que rollo con los matches
             {
-                makeMap.MakeMove(picksAndDrops.pickedCor.x, picksAndDrops.pickedCor.y, droppedOn.x, droppedOn.y);
+                if(makeMap.MakeMove(picksAndDrops.pickedCor.x, picksAndDrops.pickedCor.y, droppedOn.x, droppedOn.y))
+                {
+                    StartCoroutine("CandySwapsHome", new Vector4(picksAndDrops.pickedCor.x, picksAndDrops.pickedCor.y, droppedOn.x, droppedOn.y));
+                }
+                else
+                {
+                    StartCoroutine("CandyGoesHome", picksAndDrops.pickedCor);
+                }
             }
             else
             {
                 StartCoroutine("CandyGoesHome", picksAndDrops.pickedCor); 
             }
-            Debug.Log(grid.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
+            
         }
 
         public void OnGridStart(int[,] _grid)
@@ -162,9 +211,76 @@ namespace Mangos
 
         }
 
+        void DestroyCandies()
+        {
+            Debug.Log("Destroying visual candies");
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    if (matrix[i, j] == 0 && candyMatrix[i, j].activeSelf)
+                    {
+                        PoolManager.Despawn(candyMatrix[i, j]);
+                        Debug.Log("Destroyed i,j: " + i + ", " + j);
+                    }
+                }
+            }
+        }
+
+        public void OnCandiesDestroyed()
+        {
+            UpdateCandyMatrix();
+            makeMap.UpdateVisualizer();
+            DestroyCandies();
+            makeMap.MakeGravity();
+        }
+
+        public void CandyFall(Vector2Int[,] moveMap)
+        {
+            candyDropFallback = 0;
+            candyDropFallbackCount = 0;
+            bool atLeastOneDrop = false;
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    if ((moveMap[i, j].x != i || moveMap[i, j].y != j) && moveMap[i, j].x != -1)
+                    {
+                        atLeastOneDrop = true;
+                        StartCoroutine("CandyDropsDown", new Vector4(moveMap[i, j].x, moveMap[i, j].y, i, j));
+                        candyDropFallback++;
+                    }
+                }
+            }
+            if (!atLeastOneDrop)
+            {
+                UpdateCandyMatrix();
+                makeMap.OnCandyDropFinish();
+            }
+            
+        }
+
+        public void SpawnNewCandies(int[,] news)
+        {
+            candyDropFallback = 0;
+            candyDropFallbackCount = 0;
+            for (int i = 0; i < width; i++)
+            {
+                for(int j = 0; j < height; j++)
+                {
+                    if(news[i,j] != 0)
+                    {
+                        candyMatrix[i,j] =  PoolManager.Spawn(candies[news[i, j]], grid.CellToWorld(new Vector3Int(i, j + height, 0)) + grid.cellSize/2, Quaternion.identity).gameObject;
+                        StartCoroutine("CandyDropsDown", new Vector4(i, j, i, j));
+                        candyDropFallback++;
+                    }
+                }
+            }
+        }
 
         IEnumerator CandyGoesHome(Vector2Int dropedCor)
         {
+            Debug.Log("Candy returning to original position");
             bool notHome = true;
             Vector3 destination = grid.CellToWorld(new Vector3Int(dropedCor.x, dropedCor.y, 0)) + grid.cellSize / 2;
             while (notHome)
@@ -177,6 +293,68 @@ namespace Mangos
                     notHome = false;
                 }
                 yield return null;
+            }
+        }
+
+        IEnumerator CandySwapsHome(Vector4 pickedFrom)
+        {
+            Debug.Log("Two candies are swaping places");
+            bool notHome1 = true, notHome2 = true;
+            Vector3 destination1 = grid.CellToWorld(new Vector3Int((int)pickedFrom.z, (int)pickedFrom.w, 0)) + grid.cellSize / 2;
+            Vector3 destination2 = grid.CellToWorld(new Vector3Int((int)pickedFrom.x, (int)pickedFrom.y, 0)) + grid.cellSize / 2;
+            while (notHome1 || notHome2)
+            {
+                if (notHome1)
+                {
+                    Vector3 dir = (destination1) - candyMatrix[(int)pickedFrom.x, (int)pickedFrom.y].transform.position;
+                    candyMatrix[(int)pickedFrom.x, (int)pickedFrom.y].transform.position += dir * Time.deltaTime * 10;
+                    if (dir.magnitude <= 0.01f)
+                    {
+                        candyMatrix[(int)pickedFrom.x, (int)pickedFrom.y].transform.position = destination1;
+                        notHome1 = false;
+                    }
+                }
+                if (notHome2)
+                {
+                    Vector3 dir = (destination2) - candyMatrix[(int)pickedFrom.z, (int)pickedFrom.w].transform.position;
+                    candyMatrix[(int)pickedFrom.z, (int)pickedFrom.w].transform.position += dir * Time.deltaTime * 10;
+                    if (dir.magnitude <= 0.01f)
+                    {
+                        candyMatrix[(int)pickedFrom.z, (int)pickedFrom.w].transform.position = destination2;
+                        notHome2 = false;
+                    }
+                }
+                yield return null;
+            }
+            UpdateCandyMatrix();
+            makeMap.ClearMap();
+            makeMap.UpdateVisualizer();
+            OnCandiesDestroyed();
+        }
+
+        IEnumerator CandyDropsDown(Vector4 pickedFrom)
+        {
+            bool notHome1 = true;
+            Vector3 destination1 = grid.CellToWorld(new Vector3Int((int)pickedFrom.z, (int)pickedFrom.w, 0)) + grid.cellSize / 2;
+            float v = 0;
+            while (notHome1)
+            {
+                Vector3 dir = (destination1) - candyMatrix[(int)pickedFrom.x, (int)pickedFrom.y].transform.position;
+                candyMatrix[(int)pickedFrom.x, (int)pickedFrom.y].transform.position += dir.normalized * v * Time.deltaTime;
+                if (candyMatrix[(int)pickedFrom.x, (int)pickedFrom.y].transform.position.y <= destination1.y)
+                {
+                    candyMatrix[(int)pickedFrom.x, (int)pickedFrom.y].transform.position = destination1;
+                    notHome1 = false;
+                }
+                v += candyFallAccel;
+                yield return null;
+            }
+            candyDropFallbackCount++;
+            if (candyDropFallbackCount >= candyDropFallback)
+            {
+                Debug.Log("candyDrop callback");
+                UpdateCandyMatrix();
+                makeMap.OnCandyDropFinish();
             }
         }
     }
