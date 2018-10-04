@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TAAI
+namespace Mangos
 {
 
     //ES EL MANAGER STATICO ES UN SCRIPT QUE SE COMUNICA CON TODOS LOS DEMAS SCRIPTS SIN IMPORTA SI ESTA EN LA ESCENA
@@ -13,7 +13,8 @@ namespace TAAI
         MAIN_MENU,
         GAMEPLAY,
         PAUSE_MENU,
-        END_GAME,
+        GAME_END,
+        SCORES,
         CREDITS
     }
 
@@ -22,9 +23,9 @@ namespace TAAI
     {
         ENDLESS,
         POINTS,
-        MOVE_LIMIT
+        MOVE_LIMIT,
+        TIMEBASED
     }
-
 
     //ESTE SE ENCARGARA DE MANTENER A LOS DEMAS MANAGER COMUNICADOS ENTRE ELLOS
 	public static class Manager_Static 
@@ -33,5 +34,7 @@ namespace TAAI
 		public static Manager_App appManager;
 		public static Manager_Scene sceneManager;
         public static Manager_Audio audioManager;
+        public static Manager_Saves savesManager;
+        public static Manager_Scores scoreManager;
 	}
 }

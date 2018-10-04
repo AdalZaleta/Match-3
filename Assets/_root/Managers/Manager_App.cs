@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TAAI
+namespace Mangos
 {
 	public class Manager_App : MonoBehaviour {
 
@@ -23,7 +23,25 @@ namespace TAAI
 		public void  SetPlay()
 		{
 			Manager_Static.appManager.currentState = AppState.GAMEPLAY;
-			Time.timeScale = 1;
+			Time.timeScale = 1.0f;
 		}
+
+        public void SetWin()
+        {
+            Manager_Static.appManager.currentState = AppState.GAME_END;
+            Time.timeScale = 1.0f;
+        }
+
+        public void SetCredits()
+        {
+            Manager_Static.appManager.currentState = AppState.CREDITS;
+            Time.timeScale = 1.0f;
+        }
+
+        public void SetScores()
+        {
+            Manager_Static.appManager.currentState = AppState.SCORES;
+            Time.timeScale = 1.0f;
+        }
 	}
 }
