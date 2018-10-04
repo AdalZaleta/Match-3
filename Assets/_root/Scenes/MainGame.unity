@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -16119,6 +16119,7 @@ GameObject:
   - component: {fileID: 731219572}
   - component: {fileID: 731219577}
   - component: {fileID: 731219576}
+  - component: {fileID: 731219578}
   m_Layer: 0
   m_Name: BearerOfScripts
   m_TagString: Untagged
@@ -16209,6 +16210,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentGameState: 3
+--- !u!114 &731219578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 731219571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dee2f28d6897524d9520415c3ee0253, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioDad: {fileID: 1975043957837278, guid: b7fdb0ad6be330b4ead532290f4da8db, type: 2}
+  cam: {fileID: 0}
+  mainMenu: {fileID: 8300000, guid: 60f23b5a799049a48ba3be2f47e01c9f, type: 3}
+  clips:
+  - {fileID: 8300000, guid: 9e67f2b9e3680694eb856d538900767b, type: 3}
+  - {fileID: 8300000, guid: 0fa06bd590069f048877d4d00bcbb6d2, type: 3}
+  - {fileID: 8300000, guid: deb26a95813a083438e1706a12bf0731, type: 3}
+  - {fileID: 8300000, guid: f843a3342dd821e4e89c6e5e76cbeedc, type: 3}
+  - {fileID: 8300000, guid: ff0b182902569d84780f97d7383b6386, type: 3}
+  - {fileID: 8300000, guid: 480773e7a964ed0428e28bb8fb908e7b, type: 3}
 --- !u!1 &738437015
 GameObject:
   m_ObjectHideFlags: 0
