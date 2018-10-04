@@ -57,7 +57,7 @@ namespace Mangos
 
             //ENTRA EN ESTE IF SI EL ESTADO DE LA APLICACION ESTA EN EL MENU PRINCIPAL
             else if (Manager_Static.appManager.currentState == AppState.MAIN_MENU)
-						{
+			{
                 if (Input.GetMouseButtonDown(0))
                 {
                     Ray ray;
@@ -85,12 +85,12 @@ namespace Mangos
                     holding = false;
                     visualGrid.OnCandyDropped();
                 }
-							}
+			}
 
-	            //ENTRA EN ESTE IF SI EL ESTADO DE LA APLICACION DE LA APLIACION ESTA EN FIN DEL JUEGO
-	            else if (Manager_Static.appManager.currentState == AppState.END_GAME)
-	            {
-	            }
+	        //ENTRA EN ESTE IF SI EL ESTADO DE LA APLICACION DE LA APLIACION ESTA EN FIN DEL JUEGO
+	        else if (Manager_Static.appManager.currentState == AppState.GAME_END)
+	        {
+	        }
 		}
     }
 }
