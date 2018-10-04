@@ -17,6 +17,11 @@ namespace Mangos
             Manager_Static.sceneManager = this;
 		}
 
+        public void LoadScene(int _id)
+        {
+            SceneManager.LoadScene(_id);
+        }
+
         //ES UN METODO PARA CARGAR LA ESCENA POR ID Y SE LE PASA UN BOOLEANO PARA HACER LA CARGA ADITIVA
 		public void LoadScene(int _id, bool _isAditive)
 		{

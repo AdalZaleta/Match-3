@@ -10,6 +10,7 @@ namespace Mangos
         private int m_score = 0;
         private int m_actualScore = 0;
         private int m_movesMaded = 0;
+        private bool m_end = false;
 
         public int moves;
         public float time;
@@ -32,37 +33,39 @@ namespace Mangos
         void Update()
         {
             //AQUI SE ENCUENTRA EL CÓDIGO DEPENDIENDO DEL GAME MODE
-
-            //Game Mode ENDLESS
-            if(Manager_Static.gameModeManager.currentGameState == ModeGame.ENDLESS)
+            if (!m_end)
             {
-                EndlessGame();
-                Score();
-            }
+                //Game Mode ENDLESS
+                if (Manager_Static.gameModeManager.currentGameState == ModeGame.ENDLESS)
+                {
+                    EndlessGame();
+                    Score();
+                }
 
-            //Game Mode de MOVIMIENTOS LIMITADOS
-            else if (Manager_Static.gameModeManager.currentGameState == ModeGame.MOVE_LIMIT)
-            {
-                LimitedMoves();
-                Score();
-            }
+                //Game Mode de MOVIMIENTOS LIMITADOS
+                else if (Manager_Static.gameModeManager.currentGameState == ModeGame.MOVE_LIMIT)
+                {
+                    LimitedMoves();
+                    Score();
+                }
 
-            //Game Mode de SCORE
-            else if (Manager_Static.gameModeManager.currentGameState == ModeGame.POINTS)
-            {
-                Score();
-                if (m_actualScore >= 1000)
-                    OnWin();
-            }
+                //Game Mode de SCORE
+                else if (Manager_Static.gameModeManager.currentGameState == ModeGame.POINTS)
+                {
+                    Score();
+                    if (m_actualScore >= 1000)
+                        OnWin();
+                }
 
-            //Game Mode de LIMITED TIME
-            else if (Manager_Static.gameModeManager.currentGameState == ModeGame.TIMEBASED)
-            {
-                LimitedTime();
-                Score();
-                timeVal.text = time.ToString().Substring(0,2);
-                if(time <= 0)
-                    OnLose();
+                //Game Mode de LIMITED TIME
+                else if (Manager_Static.gameModeManager.currentGameState == ModeGame.TIMEBASED)
+                {
+                    LimitedTime();
+                    Score();
+                    timeVal.text = time.ToString().Substring(0, 2);
+                    if (time <= 0)
+                        OnLose();
+                }
             }
         }
 
@@ -70,12 +73,16 @@ namespace Mangos
         {
             Manager_Static.appManager.SetScores();
             Manager_Static.audioManager.PlaySoundGlobal(sounds.WIN);
+            Manager_Static.scoreManager.ToggleEndMenu(true);
+            m_end = true;
         }
 
         public void OnLose()
         {
             Manager_Static.appManager.SetScores();
             Manager_Static.audioManager.PlaySoundGlobal(sounds.LOSE);
+            Manager_Static.scoreManager.ToggleEndMenu(true);
+            m_end = true;
         }
 
         public void EndlessGame()

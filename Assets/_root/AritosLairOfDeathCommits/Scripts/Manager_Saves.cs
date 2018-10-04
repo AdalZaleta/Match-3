@@ -9,42 +9,22 @@ namespace Mangos
 {
     public class Manager_Saves : MonoBehaviour
     {
-        public GameObject newFileUI;
         public GameObject saveList;
         public GameObject savePrefab;
         public GameObject delPrefab;
         public GameObject grid;
-        public GameObject MainMenu;
-        public GameObject InGame;
         public GameObject Score;
         DirectoryInfo di;
 
-        private string m_selectedSave;
+        public string m_selectedSave;
 
         private void Awake()
         {
             Manager_Static.savesManager = this;
             // Set Savefiles Directory
             di = new DirectoryInfo(@"Assets/_root/Resources/Saves/");
-            LoadSaveList();
-        }
-
-        // Toggles Text Input Menu
-        public void ToggleNewFileUI(bool _bool)
-        {
-            newFileUI.SetActive(_bool);
-        }
-
-        public void ToggleMainMenu(bool _bool)
-        {
-            MainMenu.SetActive(_bool);
-            InGame.SetActive(!_bool);
-        }
-
-        public void QuitCurrentGame()
-        {
-            ToggleMainMenu(true);
-            grid.GetComponent<Temp_GridSystem>().ClearGrid();
+            DontDestroyOnLoad(this);
+            
         }
 
         // Creates empty txt file @ Resources/Saves with name given by input field
@@ -52,8 +32,7 @@ namespace Mangos
         {
             // Create new txt file with name 'savename' at _root > Resources > Saves
             File.WriteAllText("Assets/_root/Resources/Saves/" + inputField.text + ".txt", "");
-            newFileUI.SetActive(false);
-            LoadSaveList();
+            m_selectedSave = inputField.text;
         }
 
         public void DeleteSave(string _savename)
@@ -65,16 +44,6 @@ namespace Mangos
         // Gets data from game objects and stores them in it's corresponding savefile
         public void SaveGame()
         {
-            // Get data from game
-            // Save data to txt file with name
-
-            /*  SaveFile Format
-                
-             *  1st Line - Game Points
-             *  2nd Line - Grid Values
-                
-             */
-
             using (var stream = new FileStream("Assets/_root/Resources/Saves/" + m_selectedSave + ".txt", FileMode.Truncate))
             {
                 using (var clearWriter = new StreamWriter(stream))
@@ -88,14 +57,14 @@ namespace Mangos
 
             string gridValues = "";
 
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < grid.GetComponent<MakeMap>().elemento.GetLength(0); i++)
             {
-                for (int j = 0; j < 12; j++)
+                for (int j = 0; j < grid.GetComponent<MakeMap>().elemento.GetLength(1); j++)
                 {
                     if (i == 0 && j == 0)
-                        gridValues = gridValues + grid.GetComponent<Temp_GridSystem>().getGridValue(i, j);
+                        gridValues = gridValues + grid.GetComponent<MakeMap>().GetElement(i, j);
                     else
-                        gridValues = gridValues + " " + grid.GetComponent<Temp_GridSystem>().getGridValue(i, j);
+                        gridValues = gridValues + " " + grid.GetComponent<MakeMap>().GetElement(i, j);
                 }
             }
 
@@ -108,21 +77,9 @@ namespace Mangos
         {
             m_selectedSave = _savename;
 
-            ToggleMainMenu(false);
-
             if (new FileInfo("Assets/_root/Resources/Saves/" + m_selectedSave + ".txt").Length == 0)
             {
-                for (int i = 0; i < 8; i++)
-                {
-                    for (int j = 0; j < 12; j++)
-                    {
-                        grid.GetComponent<Temp_GridSystem>().SetGridValue(i, j, (int)UnityEngine.Random.Range(1, 6));
-                    }
-                }
-                Score.GetComponent<Text>().text = "0";
-                grid.GetComponent<Temp_GridSystem>().InstantiateGrid();
-
-                SaveGame();
+                Debug.Log("This wasn't supposed to happen");
             } else
             {
                 StreamReader reader = new StreamReader("Assets/_root/Resources/Saves/" + m_selectedSave + ".txt");
@@ -140,15 +97,14 @@ namespace Mangos
                             int[] arrValues = Array.ConvertAll(line.Split(' '), int.Parse);
 
                             int idValues = 0;
-                            for (int i = 0; i < 8; i++)
+                            for (int i = 0; i < grid.GetComponent<MakeMap>().elemento.GetLength(0); i++)
                             {
-                                for (int j = 0; j < 12; j++)
+                                for (int j = 0; j < grid.GetComponent<MakeMap>().elemento.GetLength(1); j++)
                                 {
-                                    grid.GetComponent<Temp_GridSystem>().SetGridValue(i, j, arrValues[idValues]);
+                                    grid.GetComponent<MakeMap>().SetElement(i, j, arrValues[idValues]);
                                     idValues++;
                                 }
                             }
-                            grid.GetComponent<Temp_GridSystem>().InstantiateGrid();
                             break;
 
                         default:
@@ -182,11 +138,11 @@ namespace Mangos
                 {
                     // For Each File in Resources/Saves
                     GameObject save = Instantiate(savePrefab, saveList.transform); // Instantiate Button
-                    save.GetComponent<RectTransform>().anchoredPosition = new Vector3(195, -115 - (50 * _i), 0); // Reposition Button
+                    save.GetComponent<RectTransform>().anchoredPosition = new Vector3(-75, -115 - (100 * _i), 0); // Reposition Button
                     save.GetComponentInChildren<Text>().text = fi.Name.Split('.')[0]; // Rename Button
 
                     GameObject del = Instantiate(delPrefab, saveList.transform);
-                    del.GetComponent<RectTransform>().anchoredPosition = new Vector3(335, -115 - (50 * _i), 0);
+                    del.GetComponent<RectTransform>().anchoredPosition = new Vector3(165, -115 - (100 * _i), 0);
 
                     // Set OnClick Method to LoadGame(_savename) with _savename as the button's text value
                     save.GetComponent<Button>().onClick.AddListener(delegate { LoadGame(save.GetComponentInChildren<Text>().text); });
