@@ -69,9 +69,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4626705075588914}
   - component: {fileID: 95068811514127074}
+  - component: {fileID: 114398923620410638}
+  - component: {fileID: 65643158336713626}
   m_Layer: 0
   m_Name: Luna
-  m_TagString: Untagged
+  m_TagString: Candy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -173,6 +175,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1716497277421306}
   m_Mesh: {fileID: 4300014, guid: 52261d13936e48640bf60d7e6704453f, type: 3}
+--- !u!65 &65643158336713626
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1839076280634890}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &95068811514127074
 Animator:
   serializedVersion: 3
@@ -209,6 +223,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114398923620410638
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1839076280634890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99a093e885ae07142971e307caeec840, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particles: {fileID: 1937934741676970, guid: 00eb0e71a44143046b8e0edf1fc9eea6, type: 2}
 --- !u!212 &212292366814603494
 SpriteRenderer:
   m_ObjectHideFlags: 1

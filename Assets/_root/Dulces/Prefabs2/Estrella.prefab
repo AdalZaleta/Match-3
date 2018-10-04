@@ -20,9 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4437457066564418}
   - component: {fileID: 95926533182674718}
+  - component: {fileID: 114351905134105456}
+  - component: {fileID: 65161554726329894}
   m_Layer: 0
   m_Name: Estrella
-  m_TagString: Untagged
+  m_TagString: Candy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -173,6 +175,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1754244799214704}
   m_Mesh: {fileID: 4300010, guid: 52261d13936e48640bf60d7e6704453f, type: 3}
+--- !u!65 &65161554726329894
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1343306635163520}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &95254269434563660
 Animator:
   serializedVersion: 3
@@ -209,6 +223,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114351905134105456
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1343306635163520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99a093e885ae07142971e307caeec840, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particles: {fileID: 1381138053455178, guid: 27822d6242d00944c80c6645a60af19d, type: 2}
 --- !u!212 &212059073653665594
 SpriteRenderer:
   m_ObjectHideFlags: 1
