@@ -20,11 +20,12 @@ namespace Mangos
         public Grid grid;
         public MakeMap makeMap;
         public float candyFallAccel;
+        public bool canPlay;
 
         private Vector2Int m_pickedCor;
         private Vector2Int m_dropedCor;
         private pickAndDrop picksAndDrops;
-
+        
         private int[,] matrix;
         private GameObject[,] candyMatrix;
         private int candyDropFallback, candyDropFallbackCount;
@@ -32,6 +33,7 @@ namespace Mangos
         void Start()
         {
             picksAndDrops = new pickAndDrop();
+            canPlay = true;
         }
 
         public void Setup(int[,] mat)
@@ -140,33 +142,38 @@ namespace Mangos
 
         public void OnCandyPicked(GameObject picked)
         {
-            
-            bool broke = false;
-            for (int i = 0; i < width; i++)
+            if (canPlay)
             {
-                for (int j = 0; j < height; j++)
+                bool broke = false;
+                for (int i = 0; i < width; i++)
                 {
-                    if (candyMatrix[i, j] == picked)
+                    for (int j = 0; j < height; j++)
                     {
-                        picksAndDrops.pickedCor = new Vector2Int(i, j);
-                        picksAndDrops.destination = grid.CellToWorld(new Vector3Int(i, j, 0)) + grid.cellSize / 2;
-                        picksAndDrops.goingHome = false;
-                        broke = true;
-                        Debug.Log("Picked candy: " + picksAndDrops.pickedCor);
-                        break;
+                        if (candyMatrix[i, j] == picked)
+                        {
+                            picksAndDrops.pickedCor = new Vector2Int(i, j);
+                            picksAndDrops.destination = grid.CellToWorld(new Vector3Int(i, j, 0)) + grid.cellSize / 2;
+                            picksAndDrops.goingHome = false;
+                            broke = true;
+                            Debug.Log("Picked candy: " + picksAndDrops.pickedCor);
+                            break;
+                        }
                     }
+                    if (broke)
+                        break;
                 }
-                if (broke)
-                    break;
             }
 
         }
 
         public void OnCandyHold(Vector3 mousePos)
         {
-            Vector3 candyPos = candyMatrix[picksAndDrops.pickedCor.x, picksAndDrops.pickedCor.y].transform.position;
-            mousePos.z = grid.gameObject.transform.position.z - 2;
-            candyMatrix[picksAndDrops.pickedCor.x, picksAndDrops.pickedCor.y].transform.position += (mousePos - candyPos) * Time.deltaTime * 15;
+            if (canPlay)
+            {
+                Vector3 candyPos = candyMatrix[picksAndDrops.pickedCor.x, picksAndDrops.pickedCor.y].transform.position;
+                mousePos.z = grid.gameObject.transform.position.z - 2;
+                candyMatrix[picksAndDrops.pickedCor.x, picksAndDrops.pickedCor.y].transform.position += (mousePos - candyPos) * Time.deltaTime * 15;
+            }
         }
 
         public void OnCandyHover()
@@ -176,24 +183,26 @@ namespace Mangos
 
         public void OnCandyDropped()
         {
-            Vector3Int droppedOn = grid.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            Debug.Log("Candy Dropped On: " + droppedOn);
-            if (droppedOn.x >= 0 && droppedOn.y >= 0 && droppedOn.x < width && droppedOn.y < height) //if en donde pregunto que rollo con los matches
+            if (canPlay)
             {
-                if(makeMap.MakeMove(picksAndDrops.pickedCor.x, picksAndDrops.pickedCor.y, droppedOn.x, droppedOn.y))
+                Vector3Int droppedOn = grid.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                Debug.Log("Candy Dropped On: " + droppedOn);
+                if (droppedOn.x >= 0 && droppedOn.y >= 0 && droppedOn.x < width && droppedOn.y < height) //if en donde pregunto que rollo con los matches
                 {
-                    StartCoroutine("CandySwapsHome", new Vector4(picksAndDrops.pickedCor.x, picksAndDrops.pickedCor.y, droppedOn.x, droppedOn.y));
+                    if (makeMap.MakeMove(picksAndDrops.pickedCor.x, picksAndDrops.pickedCor.y, droppedOn.x, droppedOn.y))
+                    {
+                        StartCoroutine("CandySwapsHome", new Vector4(picksAndDrops.pickedCor.x, picksAndDrops.pickedCor.y, droppedOn.x, droppedOn.y));
+                    }
+                    else
+                    {
+                        StartCoroutine("CandyGoesHome", picksAndDrops.pickedCor);
+                    }
                 }
                 else
                 {
                     StartCoroutine("CandyGoesHome", picksAndDrops.pickedCor);
                 }
             }
-            else
-            {
-                StartCoroutine("CandyGoesHome", picksAndDrops.pickedCor); 
-            }
-            
         }
 
         public void OnGridStart(int[,] _grid)
@@ -280,6 +289,7 @@ namespace Mangos
 
         IEnumerator CandyGoesHome(Vector2Int dropedCor)
         {
+            canPlay = false;
             Debug.Log("Candy returning to original position");
             bool notHome = true;
             Vector3 destination = grid.CellToWorld(new Vector3Int(dropedCor.x, dropedCor.y, 0)) + grid.cellSize / 2;
@@ -294,10 +304,12 @@ namespace Mangos
                 }
                 yield return null;
             }
+            canPlay = true;
         }
 
         IEnumerator CandySwapsHome(Vector4 pickedFrom)
         {
+            canPlay = false;
             Debug.Log("Two candies are swaping places");
             bool notHome1 = true, notHome2 = true;
             Vector3 destination1 = grid.CellToWorld(new Vector3Int((int)pickedFrom.z, (int)pickedFrom.w, 0)) + grid.cellSize / 2;
@@ -330,6 +342,7 @@ namespace Mangos
             makeMap.ClearMap();
             makeMap.UpdateVisualizer();
             OnCandiesDestroyed();
+            canPlay = true;
         }
 
         IEnumerator CandyDropsDown(Vector4 pickedFrom)
@@ -347,6 +360,7 @@ namespace Mangos
                     notHome1 = false;
                 }
                 v += candyFallAccel;
+                canPlay = false;
                 yield return null;
             }
             candyDropFallbackCount++;
@@ -355,6 +369,7 @@ namespace Mangos
                 Debug.Log("candyDrop callback");
                 UpdateCandyMatrix();
                 makeMap.OnCandyDropFinish();
+                canPlay = true;
             }
         }
     }
