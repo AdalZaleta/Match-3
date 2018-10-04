@@ -52,7 +52,7 @@ namespace Mangos
             {
                 Score();
                 if (m_actualScore >= 1000)
-                    Manager_Static.appManager.SetScores();
+                    OnWin();
             }
 
             //Game Mode de LIMITED TIME
@@ -62,8 +62,20 @@ namespace Mangos
                 Score();
                 timeVal.text = time.ToString().Substring(0,2);
                 if(time <= 0)
-                    Manager_Static.appManager.SetScores();
+                    OnLose();
             }
+        }
+
+        public void OnWin()
+        {
+            Manager_Static.appManager.SetScores();
+            Manager_Static.audioManager.PlaySoundGlobal(sounds.WIN);
+        }
+
+        public void OnLose()
+        {
+            Manager_Static.appManager.SetScores();
+            Manager_Static.audioManager.PlaySoundGlobal(sounds.LOSE);
         }
 
         public void EndlessGame()
@@ -75,7 +87,7 @@ namespace Mangos
         {
             movesVal.text = moves.ToString();
             if (moves <= 0)
-                Manager_Static.appManager.SetScores();
+                OnWin();
         }
 
         public void Score()
@@ -96,6 +108,7 @@ namespace Mangos
                 time = time + timeToAdd;
                 catAnim.SetTrigger("Match");
                 moves--;
+                Manager_Static.audioManager.PlaySoundGlobal(sounds.NORMAL_MATCH);
             }
             else if (_scoreToAdd == 4 || _scoreToAdd == 5)
             {
@@ -103,6 +116,7 @@ namespace Mangos
                 time = time + timeToAdd;
                 catAnim.SetTrigger("Match");
                 moves--;
+                Manager_Static.audioManager.PlaySoundGlobal(sounds.SPECIAL_MATCH);
             }
             else if (_scoreToAdd >= 6)
             {
@@ -110,6 +124,8 @@ namespace Mangos
                 time = time + timeToAdd;
                 catAnim.SetTrigger("Match");
                 moves--;
+                Manager_Static.audioManager.PlaySoundGlobal(sounds.SPECIAL_MATCH);
+                Manager_Static.audioManager.PlaySoundGlobal(sounds.SPECIAL_MATCH);
             }
             else if (_scoreToAdd >= 2)
                 Application.Quit();
