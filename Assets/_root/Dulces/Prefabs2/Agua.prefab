@@ -52,9 +52,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4951851720649266}
   - component: {fileID: 95992855849363700}
+  - component: {fileID: 114223405625606344}
+  - component: {fileID: 65012572134196568}
   m_Layer: 0
   m_Name: Agua
-  m_TagString: Untagged
+  m_TagString: Candy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -173,6 +175,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1236466237208036}
   m_Mesh: {fileID: 4300006, guid: 52261d13936e48640bf60d7e6704453f, type: 3}
+--- !u!65 &65012572134196568
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1363922327343166}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &95977464610704324
 Animator:
   serializedVersion: 3
@@ -209,6 +223,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114223405625606344
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1363922327343166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99a093e885ae07142971e307caeec840, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particles: {fileID: 1979902824127746, guid: 11616caba6f5707498128cf106e94f3e, type: 2}
 --- !u!212 &212717191290464480
 SpriteRenderer:
   m_ObjectHideFlags: 1
