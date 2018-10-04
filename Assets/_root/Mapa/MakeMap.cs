@@ -54,6 +54,11 @@ namespace Mangos
 			Grid.Setup(elemento);
 		}
 
+		public void SetElement(int _fila, int _columna, int _value)
+		{
+			elemento[_fila,_columna] = _value;
+		}
+
 		public void ClearMap()
 		{
             int contar = 0;
