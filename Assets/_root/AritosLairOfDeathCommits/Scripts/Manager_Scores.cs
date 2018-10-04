@@ -26,28 +26,34 @@ namespace Mangos
 
         public GameObject prefab;
         public GameObject panel;
-        public int newScore;
-        public string newName;
+        public GameObject inputPanel;
+        public int m_newScore;
+        private string m_newName;
 
         private void Awake()
         {
             Manager_Static.scoreManager = this;
+            inputPanel.SetActive(true);
         }
 
         private void Start()
         {
-            ListScores();
+            
         }
 
-        private void Update()
+        public void SetName(GameObject _inputBox)
         {
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                SaveScore(newName, newScore);
-            }
+            m_newName = _inputBox.GetComponent<InputField>().text;
+            inputPanel.SetActive(false);
+            SaveScore();
         }
 
-        public void SaveScore(string _name, int _score)
+        public void SetScore(int _score)
+        {
+            m_newScore = _score;
+        }
+
+        public void SaveScore()
         {
             string modeName = "";
             // ! MISSING GAMEMODE MANAGER
@@ -74,7 +80,7 @@ namespace Mangos
             {
                 // Save New Score (writer)
                 StreamWriter writer = new StreamWriter("Assets/_root/Resources/Scores/" + modeName + "_score.txt", true);
-                writer.WriteLine(_name + " " +_score.ToString());
+                writer.WriteLine(m_newName + " " +m_newScore.ToString());
                 writer.Close();
 
                 // Declaration of Arrays
@@ -159,7 +165,7 @@ namespace Mangos
             {
                 File.WriteAllText("Assets/_root/Resources/Scores/" + modeName + "_score.txt", "");
                 StreamWriter writer = new StreamWriter("Assets/_root/Resources/Scores/" + modeName + "_score.txt", true);
-                writer.WriteLine(_name + " " + _score.ToString());
+                writer.WriteLine(m_newName + " " + m_newScore.ToString());
                 writer.Close();
             }
             ListScores();
@@ -201,7 +207,7 @@ namespace Mangos
                     string line = reader.ReadLine();
                     string[] lineArr = line.Split(' ');
                     GameObject go = Instantiate(prefab, panel.transform);
-                    go.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -50 -(lineCounter * 35));
+                    go.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -100 -(lineCounter * 60));
                     go.GetComponentInChildren<Text>().text = (lineCounter + 1) + " |    " + lineArr[0] + "  :  " + lineArr[1];
                     lineCounter++;
                 }
