@@ -28,7 +28,7 @@ namespace Mangos
             //CODIGO DE LOS INPUTS DEPENDIENDO DEL ESTADO DEL JUEGO
 
             //ENTRA EN ESTE IF SI EL ESTADO DE LA APLICACION ESTA EN GAMEPLAY
-            if (Manager_Static.appManager.currentState == AppState.GAMEPLAY)
+            if (Manager_Static.appManager.currentState == AppState.MAIN_MENU)
             {
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
@@ -56,7 +56,7 @@ namespace Mangos
             }
 
             //ENTRA EN ESTE IF SI EL ESTADO DE LA APLICACION ESTA EN EL MENU PRINCIPAL
-            else if (Manager_Static.appManager.currentState == AppState.MAIN_MENU)
+            else if (Manager_Static.appManager.currentState == AppState.GAMEPLAY)
 			{
                 if (Input.GetMouseButtonDown(0))
                 {

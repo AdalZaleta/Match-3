@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Mangos
 {
@@ -13,10 +14,18 @@ namespace Mangos
         public int moves;
         public float time;
         public float timeToAdd;
+        public Text scoreNum;
+        public Text timeVal;
+        public Animator catAnim;
 
         private void Awake()
         {
             Manager_Static.gameStateManager = this;
+        }
+
+        private void Start()
+        {
+            scoreNum.text = m_score.ToString();
         }
 
         void Update()
@@ -27,12 +36,14 @@ namespace Mangos
             if(Manager_Static.gameModeManager.currentGameState == ModeGame.ENDLESS)
             {
                 EndlessGame();
+                Score();
             }
 
             //Game Mode de MOVIMIENTOS LIMITADOS
             else if (Manager_Static.gameModeManager.currentGameState == ModeGame.MOVE_LIMIT)
             {
                 LimitedMoves();
+                Score();
             }
 
             //Game Mode de SCORE
@@ -45,6 +56,8 @@ namespace Mangos
             else if (Manager_Static.gameModeManager.currentGameState == ModeGame.TIMEBASED)
             {
                 LimitedTime();
+                Score();
+                timeVal.text = time.ToString();
             }
         }
 
@@ -60,7 +73,7 @@ namespace Mangos
 
         public void Score()
         {
-            
+            scoreNum.text = m_actualScore.ToString();
         }
 
         public void LimitedTime()
@@ -68,8 +81,30 @@ namespace Mangos
             time -= Time.deltaTime;
         }
 
-        private void AddScore(int _scoreToAdd)
+        public void AddScore(int _scoreToAdd)
         {
+            if (_scoreToAdd == 3)
+            {
+                _scoreToAdd = _scoreToAdd * 2;
+                time = time + timeToAdd;
+                catAnim.SetTrigger("Match");
+            }
+            else if (_scoreToAdd == 4 || _scoreToAdd == 5)
+            {
+                _scoreToAdd = _scoreToAdd * 4;
+                time = time + timeToAdd;
+                catAnim.SetTrigger("Match");
+            }
+            else if (_scoreToAdd >= 6)
+            {
+                _scoreToAdd = _scoreToAdd * 10;
+                time = time + timeToAdd;
+                catAnim.SetTrigger("Match");
+            }
+            else if (_scoreToAdd >= 2)
+                Application.Quit();
+
+
             m_actualScore = m_actualScore + _scoreToAdd;
         }
 

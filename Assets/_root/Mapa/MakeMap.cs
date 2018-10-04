@@ -56,6 +56,7 @@ namespace Mangos
 
 		public void ClearMap()
 		{
+            int contar = 0;
             Debug.Log("Making candy values that matched 0");
 			for(int i = 0; i < filas; i++)
 			{
@@ -65,9 +66,11 @@ namespace Mangos
 					{
 						elemento[i,j] = 0;
 						espejo[i,j] = false;
+                        contar++;
 					}
 				}
 			}
+            Manager_Static.gameStateManager.AddScore(contar);
 		}
 
 		void ViewElements()
