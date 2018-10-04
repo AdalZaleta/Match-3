@@ -63,7 +63,7 @@ namespace Mangos
         }
 
         // Gets data from game objects and stores them in it's corresponding savefile
-        public void SaveGame()
+        public void SaveGame(int[,] matrix)
         {
             // Get data from game
             // Save data to txt file with name
@@ -88,9 +88,9 @@ namespace Mangos
 
             string gridValues = "";
 
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < matrix.GetLength(0); i++)
             {
-                for (int j = 0; j < 12; j++)
+                for (int j = 0; j < matrix.GetLength(1); j++)
                 {
                     if (i == 0 && j == 0)
                         gridValues = gridValues + grid.GetComponent<Temp_GridSystem>().getGridValue(i, j);
@@ -104,7 +104,7 @@ namespace Mangos
         }
 
         // Loads data from corresponding txt file and sets them in-game
-        public void LoadGame(string _savename)
+        public void LoadGame(string _savename, int[,] matrix)
         {
             m_selectedSave = _savename;
 
@@ -112,17 +112,7 @@ namespace Mangos
 
             if (new FileInfo("Assets/_root/Resources/Saves/" + m_selectedSave + ".txt").Length == 0)
             {
-                for (int i = 0; i < 8; i++)
-                {
-                    for (int j = 0; j < 12; j++)
-                    {
-                        grid.GetComponent<Temp_GridSystem>().SetGridValue(i, j, (int)UnityEngine.Random.Range(1, 6));
-                    }
-                }
-                Score.GetComponent<Text>().text = "0";
-                grid.GetComponent<Temp_GridSystem>().InstantiateGrid();
-
-                SaveGame();
+                Debug.Log("ERROR NO DATA");
             } else
             {
                 StreamReader reader = new StreamReader("Assets/_root/Resources/Saves/" + m_selectedSave + ".txt");
@@ -140,9 +130,9 @@ namespace Mangos
                             int[] arrValues = Array.ConvertAll(line.Split(' '), int.Parse);
 
                             int idValues = 0;
-                            for (int i = 0; i < 8; i++)
+                            for (int i = 0; i < matrix.GetLength(0); i++)
                             {
-                                for (int j = 0; j < 12; j++)
+                                for (int j = 0; j < matrix.GetLength(1); j++)
                                 {
                                     grid.GetComponent<Temp_GridSystem>().SetGridValue(i, j, arrValues[idValues]);
                                     idValues++;
