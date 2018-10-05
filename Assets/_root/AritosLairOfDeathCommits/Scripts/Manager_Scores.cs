@@ -14,37 +14,30 @@ namespace Mangos
 {
     public class Manager_Scores : MonoBehaviour {
 
-        public enum gamemodetemp
-        {
-            POINTS,
-            TIMEBASED,
-            MOVE_LIMIT,
-            ENDLESS
-        };
-
-        private gamemodetemp currentGameModeTemp = gamemodetemp.POINTS;
-
         public GameObject prefab;
         public GameObject panel;
         public GameObject inputPanel;
-        public int m_newScore;
+        public GameObject backButt;
+        private int m_newScore;
         private string m_newName;
 
         private void Awake()
         {
             Manager_Static.scoreManager = this;
-            inputPanel.SetActive(true);
         }
 
-        private void Start()
+        public void ToggleEndMenu(bool _bool)
         {
-            
+            inputPanel.SetActive(_bool);
         }
 
         public void SetName(GameObject _inputBox)
         {
             m_newName = _inputBox.GetComponent<InputField>().text;
             inputPanel.SetActive(false);
+            panel.SetActive(true);
+            backButt.SetActive(true);
+            SetScore(Manager_Static.gameStateManager.GetScore());
             SaveScore();
         }
 
@@ -57,21 +50,21 @@ namespace Mangos
         {
             string modeName = "";
             // ! MISSING GAMEMODE MANAGER
-            switch (currentGameModeTemp)
+            switch (Manager_Static.gameModeManager.currentGameState)
             {
-                case gamemodetemp.POINTS:
+                case ModeGame.POINTS:
                     modeName = "Points";
                     break;
 
-                case gamemodetemp.TIMEBASED:
+                case ModeGame.TIMEBASED:
                     modeName = "Time";
                     break;
 
-                case gamemodetemp.MOVE_LIMIT:
+                case ModeGame.MOVE_LIMIT:
                     modeName = "Limit";
                     break;
 
-                case gamemodetemp.ENDLESS:
+                case ModeGame.ENDLESS:
                     modeName = "Endless";
                     break;
             }
@@ -174,21 +167,21 @@ namespace Mangos
         public void ListScores()
         {
             string modeName = "";
-            switch (currentGameModeTemp)
+            switch (Manager_Static.gameModeManager.currentGameState)
             {
-                case gamemodetemp.POINTS:
+                case ModeGame.POINTS:
                     modeName = "Points";
                     break;
 
-                case gamemodetemp.TIMEBASED:
+                case ModeGame.TIMEBASED:
                     modeName = "Time";
                     break;
 
-                case gamemodetemp.MOVE_LIMIT:
+                case ModeGame.MOVE_LIMIT:
                     modeName = "Limit";
                     break;
 
-                case gamemodetemp.ENDLESS:
+                case ModeGame.ENDLESS:
                     modeName = "Endless";
                     break;
             }

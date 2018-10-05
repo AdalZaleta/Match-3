@@ -23,7 +23,7 @@ namespace Mangos
 		public GameObject pivotes;
 		public GameObject contenedorColumnas;
 		public GameObject contenedorFilas;
-		int[,] elemento;
+		public int[,] elemento;
 		bool[,] espejo;
 		int _actF;
 		int _actC;

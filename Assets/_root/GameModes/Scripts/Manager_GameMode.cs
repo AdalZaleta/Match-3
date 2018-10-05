@@ -11,6 +11,8 @@ namespace Mangos
         private void Awake()
         {
             Manager_Static.gameModeManager = this;
+            GameObject getGM = GameObject.Find("SetGameMode");
+            currentGameState = getGM.GetComponent<SetGameMode>().getGameMode();
         }
 
         public void SetEndless()

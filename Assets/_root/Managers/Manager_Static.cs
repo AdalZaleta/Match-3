@@ -38,5 +38,6 @@ namespace Mangos
         public static Manager_GameState gameStateManager;
         public static Manager_Saves savesManager;
         public static Manager_Scores scoreManager;
+        public static Manager_UI uiManager;
 	}
 }
