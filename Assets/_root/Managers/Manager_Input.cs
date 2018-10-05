@@ -82,7 +82,9 @@ namespace Mangos
                     }
                     else if (pickingMode == 1)
                     {
-                        holding = visualGrid.OnCandyPicked(visualGrid.grid.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
+                        Vector3Int clickOn = visualGrid.grid.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                        if(clickOn.x >= 0 && clickOn.x < visualGrid.width && clickOn.y >= 0 && clickOn.y < visualGrid.height)
+                            holding = visualGrid.OnCandyPicked(clickOn);
                     }
                 }
                 else if (Input.GetMouseButton(0) && holding)
