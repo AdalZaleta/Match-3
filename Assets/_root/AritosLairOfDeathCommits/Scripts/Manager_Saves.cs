@@ -16,15 +16,36 @@ namespace Mangos
         public GameObject Score;
         DirectoryInfo di;
 
-        public string m_selectedSave;
+        private string m_selectedSave;
+        private GameObject thicc;
 
         private void Awake()
         {
             Manager_Static.savesManager = this;
             // Set Savefiles Directory
             di = new DirectoryInfo(@"Assets/_root/Resources/Saves/");
-            DontDestroyOnLoad(this);
-            
+            thicc = GameObject.Find("ThickLoad");
+            m_selectedSave = thicc.GetComponent<SetGameMode>().getSavename();
+            if (thicc.GetComponent<SetGameMode>().isLoading)
+            {
+                if (grid)
+                {
+                    grid.GetComponent<MakeMap>().isLoading = true;
+                }
+            }
+        }
+
+        private void Start()
+        {
+            if (thicc.GetComponent<SetGameMode>().isLoading)
+            {
+                LoadGame(m_selectedSave);
+            }
+        }
+
+        public void DestroyThicc()
+        {
+            thicc.GetComponent<SetGameMode>().DestroyTheChild();
         }
 
         // Creates empty txt file @ Resources/Saves with name given by input field
@@ -76,6 +97,7 @@ namespace Mangos
         public void LoadGame(string _savename)
         {
             m_selectedSave = _savename;
+            grid.GetComponent<MakeMap>().ClearMap();
 
             if (new FileInfo("Assets/_root/Resources/Saves/" + m_selectedSave + ".txt").Length == 0)
             {
@@ -97,10 +119,11 @@ namespace Mangos
                             int[] arrValues = Array.ConvertAll(line.Split(' '), int.Parse);
 
                             int idValues = 0;
-                            for (int i = 0; i < grid.GetComponent<MakeMap>().elemento.GetLength(0); i++)
+                            for (int i = 0; i < grid.GetComponent<MakeMap>().filas; i++)
                             {
-                                for (int j = 0; j < grid.GetComponent<MakeMap>().elemento.GetLength(1); j++)
+                                for (int j = 0; j < grid.GetComponent<MakeMap>().columnas; j++)
                                 {
+                                    Debug.Log("Usage of elemento");
                                     grid.GetComponent<MakeMap>().SetElement(i, j, arrValues[idValues]);
                                     idValues++;
                                 }
@@ -115,6 +138,7 @@ namespace Mangos
                 }
                 reader.Close();
             }
+            grid.GetComponent<MakeMap>().setupElem();
         }
 
         // Loads all savefile names from Resources/Saves and lists them
@@ -145,7 +169,7 @@ namespace Mangos
                     del.GetComponent<RectTransform>().anchoredPosition = new Vector3(165, -115 - (100 * _i), 0);
 
                     // Set OnClick Method to LoadGame(_savename) with _savename as the button's text value
-                    save.GetComponent<Button>().onClick.AddListener(delegate { LoadGame(save.GetComponentInChildren<Text>().text); });
+                    save.GetComponent<Button>().onClick.AddListener(delegate { thicc.GetComponent<SetGameMode>().LoadSave(save.GetComponentInChildren<Text>().text); });
                     del.GetComponent<Button>().onClick.AddListener(delegate { DeleteSave(save.GetComponentInChildren<Text>().text); });
 
                     _i++;

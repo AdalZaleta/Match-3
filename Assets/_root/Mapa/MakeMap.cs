@@ -28,16 +28,30 @@ namespace Mangos
 		int _actF;
 		int _actC;
 		int m_contador = 1;
+        public bool isLoading = false;
 
 
 		void Start ()
 		{
 			espejo = new bool[filas,columnas];
 			elemento= new int[filas,columnas];
+
+            if (!isLoading)
+                GenerateGrid();
+
+			Grid.Setup(elemento);
+		}
+
+        public void setupElem()
+        {
+            Grid.Setup(elemento);
+        }
+
+        private void GenerateGrid()
+        {
             int limit = 0;
-
-
-            do {
+            do
+            {
                 if (limit > 0) Debug.Log("Match at start, rebuilding map");
                 limit++;
                 for (int w = 0; w < filas; w++)
@@ -45,17 +59,16 @@ namespace Mangos
                     for (int x = 0; x < columnas; x++)
                     {
                         espejo[w, x] = false;
-                        elemento[w, x] = Random.Range(1, Grid.candies.Length-1);
+                        elemento[w, x] = Random.Range(1, Grid.candies.Length - 1);
                     }
                 }
-		        CheckMap();
-            } while ( ViewMatchs());
-
-			Grid.Setup(elemento);
-		}
+                CheckMap();
+            } while (ViewMatchs());
+        }
 
 		public void SetElement(int _fila, int _columna, int _value)
 		{
+            espejo[_fila, _columna] = false;
 			elemento[_fila,_columna] = _value;
 		}
 

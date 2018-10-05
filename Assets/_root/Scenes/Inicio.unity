@@ -949,7 +949,7 @@ GameObject:
   - component: {fileID: 315978438}
   - component: {fileID: 315978437}
   m_Layer: 0
-  m_Name: SetGameMode
+  m_Name: ThickLoad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -966,6 +966,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1061f44f66ee5ba45a31274d4bf52b23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isLoading: 0
 --- !u!4 &315978438
 Transform:
   m_ObjectHideFlags: 0
@@ -2167,6 +2168,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 315978437}
+        m_MethodName: SetSavename
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 396262836}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.InputField, UnityEngine.UI
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 556756530}
         m_MethodName: LoadScene
         m_Mode: 3
@@ -2666,7 +2678,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1266639127
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2736,7 +2748,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1591235176}
         m_MethodName: LoadSaveList
         m_Mode: 1
         m_Arguments:
@@ -3074,6 +3086,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1630726425135660, guid: 7eee65d218f895e42be6c9a6ae5ec22b,
     type: 2}
   m_PrefabInternal: {fileID: 556756529}
+--- !u!114 &1591235176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1591235173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b705aabb582ce4428c067cd608f4ed1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveList: {fileID: 275040202}
+  savePrefab: {fileID: 1226158295753732, guid: 3acff922c0121e94184edc6617c671b4, type: 2}
+  delPrefab: {fileID: 1852332044659414, guid: 83a4b688a094e01478af77bd8a853d33, type: 2}
+  grid: {fileID: 0}
+  Score: {fileID: 0}
 --- !u!114 &1591235178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3387,7 +3415,6 @@ MonoBehaviour:
   delPrefab: {fileID: 1852332044659414, guid: 83a4b688a094e01478af77bd8a853d33, type: 2}
   grid: {fileID: 0}
   Score: {fileID: 0}
-  m_selectedSave: 
 --- !u!4 &1735455392
 Transform:
   m_ObjectHideFlags: 0

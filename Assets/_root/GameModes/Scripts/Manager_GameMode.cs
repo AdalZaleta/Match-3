@@ -11,7 +11,7 @@ namespace Mangos
         private void Awake()
         {
             Manager_Static.gameModeManager = this;
-            GameObject getGM = GameObject.Find("SetGameMode");
+            GameObject getGM = GameObject.Find("ThickLoad");
             currentGameState = getGM.GetComponent<SetGameMode>().getGameMode();
         }
 

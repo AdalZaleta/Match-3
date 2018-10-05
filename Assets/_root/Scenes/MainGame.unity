@@ -1034,7 +1034,7 @@ GameObject:
   - component: {fileID: 235917862}
   - component: {fileID: 235917861}
   m_Layer: 0
-  m_Name: Button
+  m_Name: Salir
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1098,7 +1098,29 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 235917862}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 731219580}
+        m_MethodName: DestroyThicc
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 731219572}
+        m_MethodName: LoadScene
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &235917862
@@ -15991,7 +16013,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3173959, y: 0.42600003}
   m_AnchorMax: {x: 0.651, y: 0.6111482}
-  m_AnchoredPosition: {x: -0.000015258789, y: 72}
+  m_AnchoredPosition: {x: 0, y: 72}
   m_SizeDelta: {x: -8.200073, y: -5.600006}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &606943880
@@ -16514,6 +16536,7 @@ GameObject:
   - component: {fileID: 731219576}
   - component: {fileID: 731219578}
   - component: {fileID: 731219579}
+  - component: {fileID: 731219580}
   m_Layer: 0
   m_Name: BearerOfScripts
   m_TagString: Untagged
@@ -16641,6 +16664,22 @@ MonoBehaviour:
   panel: {fileID: 1634824437}
   inputPanel: {fileID: 449761217}
   backButt: {fileID: 1190262324}
+--- !u!114 &731219580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 731219571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b705aabb582ce4428c067cd608f4ed1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveList: {fileID: 0}
+  savePrefab: {fileID: 0}
+  delPrefab: {fileID: 0}
+  grid: {fileID: 335664157}
+  Score: {fileID: 1220678007}
 --- !u!1 &738437015
 GameObject:
   m_ObjectHideFlags: 0
@@ -27753,6 +27792,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 731219580}
+        m_MethodName: DestroyThicc
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 731219572}
         m_MethodName: LoadScene
         m_Mode: 3
@@ -28057,6 +28107,11 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71f32579e93a1e54aaf12300547c9b7d, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &1220678007 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1681332586678204, guid: 71f32579e93a1e54aaf12300547c9b7d,
+    type: 2}
+  m_PrefabInternal: {fileID: 1220678006}
 --- !u!1 &1232953059
 GameObject:
   m_ObjectHideFlags: 0
@@ -28421,7 +28476,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1329854258
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28438,7 +28493,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3173959, y: 0.42600003}
   m_AnchorMax: {x: 0.651, y: 0.6111482}
-  m_AnchoredPosition: {x: 4.1, y: -69}
+  m_AnchoredPosition: {x: 4.100006, y: -69}
   m_SizeDelta: {x: -8.200073, y: -5.600006}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1329854259
@@ -28481,7 +28536,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 731219580}
         m_MethodName: SaveGame
         m_Mode: 1
         m_Arguments:
@@ -45415,7 +45470,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Salir
+  m_Text: Menu
 --- !u!222 &2023848162
 CanvasRenderer:
   m_ObjectHideFlags: 0

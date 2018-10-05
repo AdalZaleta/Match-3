@@ -1,16 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Mangos
 {
     public class SetGameMode : MonoBehaviour
     {
         private ModeGame m_gamemodeSet;
+        private string m_savename;
+        public bool isLoading = false;
 
         private void Awake()
         {
             DontDestroyOnLoad(this);
+        }
+
+        public string getSavename()
+        {
+            return m_savename;
+        }
+
+        public void SetSavename(InputField _nameInput)
+        {
+            m_savename = _nameInput.GetComponent<InputField>().text;
         }
 
         public ModeGame getGameMode()
@@ -38,7 +51,18 @@ namespace Mangos
                     m_gamemodeSet = ModeGame.ENDLESS;
                     break;
             }
-            
+        }
+
+        public void LoadSave(string _savename)
+        {
+            m_savename = _savename;
+            isLoading = true;
+            Manager_Static.sceneManager.LoadScene(1);
+        }
+
+        public void DestroyTheChild()
+        {
+            Destroy(this.gameObject);
         }
     }
 }
