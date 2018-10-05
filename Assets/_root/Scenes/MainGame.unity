@@ -1273,6 +1273,7 @@ MonoBehaviour:
   pivotes: {fileID: 1092955535284120, guid: 2f262eced0ec9ed4f9070b049f62f212, type: 2}
   contenedorColumnas: {fileID: 1090005798}
   contenedorFilas: {fileID: 2024977634}
+  isLoading: 0
 --- !u!4 &335664159
 Transform:
   m_ObjectHideFlags: 0
@@ -16318,6 +16319,48 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &661763904
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4625681233112988, guid: 1cb0949c8dbe6ab4082ac574ecee6858, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.0028480603
+      objectReference: {fileID: 0}
+    - target: {fileID: 4625681233112988, guid: 1cb0949c8dbe6ab4082ac574ecee6858, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.14854503
+      objectReference: {fileID: 0}
+    - target: {fileID: 4625681233112988, guid: 1cb0949c8dbe6ab4082ac574ecee6858, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0.00043409134
+      objectReference: {fileID: 0}
+    - target: {fileID: 4625681233112988, guid: 1cb0949c8dbe6ab4082ac574ecee6858, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4625681233112988, guid: 1cb0949c8dbe6ab4082ac574ecee6858, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4625681233112988, guid: 1cb0949c8dbe6ab4082ac574ecee6858, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4625681233112988, guid: 1cb0949c8dbe6ab4082ac574ecee6858, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4625681233112988, guid: 1cb0949c8dbe6ab4082ac574ecee6858, type: 2}
+      propertyPath: m_RootOrder
+      value: 18
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1cb0949c8dbe6ab4082ac574ecee6858, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &666491964
 GameObject:
   m_ObjectHideFlags: 0
@@ -29086,7 +29129,7 @@ MonoBehaviour:
   width: 8
   height: 6
   candies:
-  - {fileID: 100000, guid: c7a910b84cbbe4c4784a22ddfc08e948, type: 3}
+  - {fileID: 1541113517272158, guid: 1cb0949c8dbe6ab4082ac574ecee6858, type: 2}
   - {fileID: 1363922327343166, guid: 76ca2fe988b7ffc449d91fca9fb19297, type: 2}
   - {fileID: 1419443317290616, guid: b18d1162ee9fb89478ad614509ad476e, type: 2}
   - {fileID: 1547481603558046, guid: e1bef07b7f0e47145b71dfd1300a5ecb, type: 2}

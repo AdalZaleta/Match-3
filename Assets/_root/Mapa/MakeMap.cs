@@ -45,6 +45,7 @@ namespace Mangos
         public void setupElem()
         {
             Grid.Setup(elemento);
+            UpdateVisualizer();
         }
 
         private void GenerateGrid()

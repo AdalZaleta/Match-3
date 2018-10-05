@@ -93,9 +93,12 @@ namespace Mangos
                 {
                     if (candyMatrix[i,j] != null)
                         PoolManager.Despawn(candyMatrix[i,j]);
-
-                    Transform candy = PoolManager.Spawn(candies[matrix[i,j]], grid.CellToWorld(new Vector3Int(i, j, 0)) + grid.cellSize/2 + Vector3.Scale(transform.position, Vector3.forward), Quaternion.identity);
-                    candyMatrix[i,j] = candy.gameObject;
+                    
+                    if (candies[matrix[i,j]] != null)
+                    {
+                        Transform candy = PoolManager.Spawn(candies[matrix[i, j]], grid.CellToWorld(new Vector3Int(i, j, 0)) + grid.cellSize / 2 + Vector3.Scale(transform.position, Vector3.forward), Quaternion.identity);
+                        candyMatrix[i, j] = candy.gameObject;
+                    } 
                 }
             }
         }
