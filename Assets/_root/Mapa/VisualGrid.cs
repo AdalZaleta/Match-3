@@ -34,6 +34,7 @@ namespace Mangos
         {
             picksAndDrops = new pickAndDrop();
             canPlay = true;
+            PoolManager.ClearPools();
         }
 
         public void Setup(int[,] mat)
@@ -46,6 +47,7 @@ namespace Mangos
             for (int i = 0; i < candies.Length; i++)
             {
                 PoolManager.MakePool(candies[i], 50);
+                
             }
             RedrawGrid();
         }
@@ -96,6 +98,7 @@ namespace Mangos
                     
                     if (candies[matrix[i,j]] != null)
                     {
+                        Debug.Log("Trying to spawn: " + candies[matrix[i, j]].name);
                         Transform candy = PoolManager.Spawn(candies[matrix[i, j]], grid.CellToWorld(new Vector3Int(i, j, 0)) + grid.cellSize / 2 + Vector3.Scale(transform.position, Vector3.forward), Quaternion.identity);
                         candyMatrix[i, j] = candy.gameObject;
                     } 
