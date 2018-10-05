@@ -107,6 +107,12 @@ namespace Mangos
             time -= Time.deltaTime;
         }
 
+        public void SetScore(int _newScore)
+        {
+            m_actualScore = _newScore;
+            Score();
+        }
+
         public void AddScore(int _scoreToAdd)
         {
             if (_scoreToAdd == 3)

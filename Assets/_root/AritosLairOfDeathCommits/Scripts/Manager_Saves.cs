@@ -112,7 +112,7 @@ namespace Mangos
                     switch (lineCounter)
                     {
                         case 0:
-                            Score.GetComponent<Text>().text = line;
+                            Manager_Static.gameStateManager.SetScore(int.Parse(line));
                             break;
 
                         case 1:
