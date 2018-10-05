@@ -10,6 +10,8 @@ namespace Mangos
 
         public VisualGrid visualGrid;
 
+        public int pickingMode;
+
 		void Awake()
 		{
             //SE OCUOPA DECIRLEA AL MANAGER STATIC QUIEN ES SI MANAGER DE INPUTS
@@ -60,20 +62,27 @@ namespace Mangos
 			{
                 if (Input.GetMouseButtonDown(0))
                 {
-                    Ray ray;
-                    ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    RaycastHit hit;
-                    if(Physics.Raycast(ray, out hit))
+                    if (pickingMode == 0)
                     {
-                        if (hit.collider.CompareTag("Candy"))
+                        Ray ray;
+                        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                        RaycastHit hit;
+                        if (Physics.Raycast(ray, out hit))
                         {
-                            visualGrid.OnCandyPicked(hit.collider.gameObject);
-                            holding = true;
+                            if (hit.collider.CompareTag("Candy"))
+                            {
+                                visualGrid.OnCandyPicked(hit.collider.gameObject);
+                                holding = true;
+                            }
+                            else
+                            {
+                                Debug.Log("Candy not hit");
+                            }
                         }
-                        else
-                        {
-                            Debug.Log("Candy not hit");
-                        }
+                    }
+                    else if (pickingMode == 1)
+                    {
+                        holding = visualGrid.OnCandyPicked(visualGrid.grid.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
                     }
                 }
                 else if (Input.GetMouseButton(0) && holding)

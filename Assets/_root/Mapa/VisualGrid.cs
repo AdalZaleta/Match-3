@@ -166,6 +166,19 @@ namespace Mangos
 
         }
 
+        public bool OnCandyPicked(Vector3Int picked)
+        {
+            Debug.Log("picked: " + picked);
+            if (canPlay)
+            {
+                picksAndDrops.pickedCor = new Vector2Int(picked.x, picked.y);
+                picksAndDrops.destination = grid.CellToWorld(new Vector3Int(picked.x, picked.y, 0)) + grid.cellSize / 2;
+                picksAndDrops.goingHome = false;
+                return true;
+            }
+            return false;
+        }
+
         public void OnCandyHold(Vector3 mousePos)
         {
             if (canPlay)
@@ -292,14 +305,16 @@ namespace Mangos
             canPlay = false;
             Debug.Log("Candy returning to original position");
             bool notHome = true;
-            Vector3 destination = grid.CellToWorld(new Vector3Int(dropedCor.x, dropedCor.y, 0)) + grid.cellSize / 2;
+            //Vector3 destination = grid.CellToWorld(new Vector3Int(dropedCor.x, dropedCor.y, 0)) + grid.cellSize / 2;
+            Vector3 destination = picksAndDrops.destination;
+            GameObject traveler = candyMatrix[dropedCor.x, dropedCor.y];
             while (notHome)
             {
-                Vector3 dir = (destination) - candyMatrix[dropedCor.x, dropedCor.y].transform.position;
-                candyMatrix[dropedCor.x, dropedCor.y].transform.position += dir * Time.deltaTime * 10;
+                Vector3 dir = (destination) - traveler.transform.position;
+                traveler.transform.position += dir * Time.deltaTime * 10;
                 if (dir.magnitude <= 0.01f)
                 {
-                    candyMatrix[dropedCor.x, dropedCor.y].transform.position = destination;
+                    traveler.transform.position = destination;
                     notHome = false;
                 }
                 yield return null;
@@ -314,25 +329,27 @@ namespace Mangos
             bool notHome1 = true, notHome2 = true;
             Vector3 destination1 = grid.CellToWorld(new Vector3Int((int)pickedFrom.z, (int)pickedFrom.w, 0)) + grid.cellSize / 2;
             Vector3 destination2 = grid.CellToWorld(new Vector3Int((int)pickedFrom.x, (int)pickedFrom.y, 0)) + grid.cellSize / 2;
+            GameObject candy1 = candyMatrix[(int)pickedFrom.x, (int)pickedFrom.y];
+            GameObject candy2 = candyMatrix[(int)pickedFrom.z, (int)pickedFrom.w];
             while (notHome1 || notHome2)
             {
                 if (notHome1)
                 {
-                    Vector3 dir = (destination1) - candyMatrix[(int)pickedFrom.x, (int)pickedFrom.y].transform.position;
-                    candyMatrix[(int)pickedFrom.x, (int)pickedFrom.y].transform.position += dir * Time.deltaTime * 10;
+                    Vector3 dir = (destination1) - candy1.transform.position;
+                    candy1.transform.position += dir * Time.deltaTime * 10;
                     if (dir.magnitude <= 0.01f)
                     {
-                        candyMatrix[(int)pickedFrom.x, (int)pickedFrom.y].transform.position = destination1;
+                        candy1.transform.position = destination1;
                         notHome1 = false;
                     }
                 }
                 if (notHome2)
                 {
-                    Vector3 dir = (destination2) - candyMatrix[(int)pickedFrom.z, (int)pickedFrom.w].transform.position;
-                    candyMatrix[(int)pickedFrom.z, (int)pickedFrom.w].transform.position += dir * Time.deltaTime * 10;
+                    Vector3 dir = (destination2) - candy2.transform.position;
+                    candy2.transform.position += dir * Time.deltaTime * 10;
                     if (dir.magnitude <= 0.01f)
                     {
-                        candyMatrix[(int)pickedFrom.z, (int)pickedFrom.w].transform.position = destination2;
+                        candy2.transform.position = destination2;
                         notHome2 = false;
                     }
                 }
@@ -350,6 +367,8 @@ namespace Mangos
             bool notHome1 = true;
             Vector3 destination1 = grid.CellToWorld(new Vector3Int((int)pickedFrom.z, (int)pickedFrom.w, 0)) + grid.cellSize / 2;
             float v = 0;
+            GameObject candy1 = candyMatrix[(int)pickedFrom.x, (int)pickedFrom.y];
+            GameObject candy2 = candyMatrix[(int)pickedFrom.z, (int)pickedFrom.w];
             while (notHome1)
             {
                 Vector3 dir = (destination1) - candyMatrix[(int)pickedFrom.x, (int)pickedFrom.y].transform.position;
@@ -376,7 +395,5 @@ namespace Mangos
 }
 
 /*TODO:
-    - Que haga los swaps si se necesita
-    - Usar el arte que nos dieron
-    - Hacer un script de los dulces para las animaciones y particulas
+    - Cambio a gameobjects en lugar d matrix en candy drops down
  */
