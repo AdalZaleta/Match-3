@@ -49,7 +49,7 @@ namespace Mangos
         public void SaveScore()
         {
             string modeName = "";
-            // ! MISSING GAMEMODE MANAGER
+            
             switch (Manager_Static.gameModeManager.currentGameState)
             {
                 case ModeGame.POINTS:
@@ -68,7 +68,9 @@ namespace Mangos
                     modeName = "Endless";
                     break;
             }
-            Debug.Log("Current GameMode: " + modeName);
+            
+            // DEPRECATED
+            /*
             if (File.Exists("Assets/_root/Resources/Scores/"+modeName+"_score.txt"))
             {
                 // Save New Score (writer)
@@ -161,6 +163,88 @@ namespace Mangos
                 writer.WriteLine(m_newName + " " + m_newScore.ToString());
                 writer.Close();
             }
+            */
+
+            if (PlayerPrefs.HasKey(modeName + "_scores"))
+            {
+                // Save New Score
+                PlayerPrefs.SetString(modeName + "_name", PlayerPrefs.GetString(modeName + "_name") + " ");
+                PlayerPrefs.SetString(modeName + "_score", PlayerPrefs.GetInt(modeName + "_score").ToString() + " ");
+
+                // Sorting Arrays
+                string[] ogNames = new string[6];
+                int[] ogScores = new int[6];
+                string[] sortedNames = new string[6];
+                int[] sortedScores = new int[6];
+                bool[] usedScore = { false, false, false, false, false, false };
+
+                // Check New Number of Scores
+                // Setting Original Array Values
+                for (int i = 0; i < 6; i++) {
+                    string[] scoresArr = PlayerPrefs.GetString(modeName + "_score").Split(' ');
+                    string[] namesArr = PlayerPrefs.GetString(modeName + "_name").Split(' ');
+                    // Set Values for og Names & Values and pre-sortedScores
+                    ogNames[i] = namesArr[i];
+                    ogScores[i] = int.Parse(scoresArr[i]);
+                    sortedScores[i] = int.Parse(scoresArr[i]);
+                }
+
+                // Trim sortedScore's Length to Fit Current Scores and Update sortedNames' Length
+                bool foundNull = false;
+                for (int i = 0; i < sortedScores.Length; i++)
+                {
+                    if (sortedScores[i] == 0 && !foundNull)
+                    {
+                        Array.Resize(ref sortedScores, i);
+                        Array.Resize(ref sortedNames, i);
+                        foundNull = true;
+                    }
+                }
+
+                // Sort Scores
+                Array.Sort(sortedScores);
+                Array.Reverse(sortedScores);
+
+                // Trim if more than 5 values in array
+                if (!foundNull)
+                {
+                    Array.Resize(ref sortedScores, 5);
+                    Array.Resize(ref sortedNames, 5);
+                }
+
+                // Link Names to Corresponding Score
+                for (int i = 0; i < sortedScores.Length; i++)
+                {
+                    bool setName = false;
+                    for (int j = 0; j < ogScores.Length; j++)
+                    {
+                        if ((sortedScores[i] == ogScores[j]) && !usedScore[j] && !setName)
+                        {
+                            sortedNames[i] = ogNames[j];
+                            usedScore[j] = true;
+                            setName = true;
+                        }
+                    }
+                }
+
+                // Set Names and Scores to single Strings
+                string sortedN = "";
+                string sortedS = "";
+                for (int i = 0; i < 6; i++)
+                {
+                    sortedN += sortedNames[i] + " ";
+                    sortedS += sortedScores[i] + " ";
+                }
+
+                PlayerPrefs.SetString(modeName + "_name", sortedN);
+                PlayerPrefs.SetString(modeName + "_score", sortedS);
+
+            } else
+            {
+                PlayerPrefs.SetString(modeName + "_name", m_newName + " ");
+                PlayerPrefs.SetString(modeName + "_score", m_newScore.ToString() + " ");
+            }
+
             ListScores();
         }
 
@@ -186,7 +270,8 @@ namespace Mangos
                     break;
             }
 
-            Debug.Log("Listing " + modeName + "_score.txt");
+            // DEPRECATED
+            /*
             if (File.Exists("Assets/_root/Resources/Scores/" + modeName + "_score.txt"))
             {
                 foreach(Transform child in panel.transform)
@@ -209,6 +294,21 @@ namespace Mangos
             else
             {
                 Debug.Log("No Scores To List");
+            }
+            */
+
+            foreach (Transform child in panel.transform)
+            {
+                Destroy(child.gameObject);
+            }
+
+            string[] namesArr = PlayerPrefs.GetString(modeName + "_name").Split(' ');
+            string[] scoresArr = PlayerPrefs.GetString(modeName + "_score").Split(' ');
+            for (int i = 0; i < namesArr.Length; i++)
+            {
+                GameObject go = Instantiate(prefab, panel.transform); // Instantiate Score
+                go.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -100 - (i * 60)); // Reposition Score
+                go.GetComponentInChildren<Text>().text = i + " |    " + namesArr[i] + "  :  " + scoresArr[i];
             }
         }
     }

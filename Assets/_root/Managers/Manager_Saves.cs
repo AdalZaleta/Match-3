@@ -22,8 +22,10 @@ namespace Mangos
         private void Awake()
         {
             Manager_Static.savesManager = this;
+
+            // DEPRECATED
             // Set Savefiles Directory
-            di = new DirectoryInfo(@"Assets/_root/Resources/Saves/");
+            //di = new DirectoryInfo(@"Assets/_root/Resources/Saves/");
             thicc = GameObject.Find("ThickLoad");
             m_selectedSave = thicc.GetComponent<SetGameMode>().getSavename();
             if (thicc.GetComponent<SetGameMode>().isLoading)
@@ -52,19 +54,57 @@ namespace Mangos
         public void CreateSavefile(InputField inputField)
         {
             // Create new txt file with name 'savename' at _root > Resources > Saves
-            File.WriteAllText("Assets/_root/Resources/Saves/" + inputField.text + ".txt", "");
+            // DEPRECATED
+            // File.WriteAllText("Assets/_root/Resources/Saves/" + inputField.text + ".txt", "");
+
+            // Add Save to AllSaves list
+            
+
+            string savename = inputField.text;
+            int index = 0;
+            while (PlayerPrefs.HasKey(savename + "_grid"))
+            {
+                savename = savename + "_" + index.ToString();
+                index++;
+            }
+
+            // Save Individual Key
+            PlayerPrefs.SetString(savename + "_grid", "");
+            PlayerPrefs.SetInt(savename + "_score", 0);
+
+            // Save key to allSaves keylist
+            PlayerPrefs.SetString("AllSaves", PlayerPrefs.GetString("AllSaves") + savename + " ");
+
             m_selectedSave = inputField.text;
         }
 
         public void DeleteSave(string _savename)
         {
-            File.Delete("Assets/_root/Resources/Saves/" + _savename + ".txt");
+            // DEPRECATED
+            // File.Delete("Assets/_root/Resources/Saves/" + _savename + ".txt");
+
+            PlayerPrefs.DeleteKey(_savename + "_grid");
+            PlayerPrefs.DeleteKey(_savename + "_score");
+
+            string[] allSavesArr = PlayerPrefs.GetString("AllSaves").Split(' ');
+            string newAllSaves = "";
+            for (int i = 0; i < allSavesArr.Length; i++)
+            {
+                if (allSavesArr[i] != _savename)
+                {
+                    newAllSaves += allSavesArr[i] + " ";
+                }
+            }
+            PlayerPrefs.SetString("AllSaves", newAllSaves);
+
             LoadSaveList();
         }
 
         // Gets data from game objects and stores them in it's corresponding savefile
         public void SaveGame()
         {
+            // DEPRECATED
+            /*
             using (var stream = new FileStream("Assets/_root/Resources/Saves/" + m_selectedSave + ".txt", FileMode.Truncate))
             {
                 using (var clearWriter = new StreamWriter(stream))
@@ -75,6 +115,9 @@ namespace Mangos
 
             StreamWriter writer = new StreamWriter("Assets/_root/Resources/Saves/" + m_selectedSave + ".txt", true);
             writer.WriteLine(Score.GetComponent<Text>().text);
+            writer.WriteLine(gridValues);
+            writer.Close(); 
+            */
 
             string gridValues = "";
 
@@ -89,8 +132,9 @@ namespace Mangos
                 }
             }
 
-            writer.WriteLine(gridValues);
-            writer.Close();
+            PlayerPrefs.SetString(m_selectedSave + "_grid", gridValues);
+            PlayerPrefs.SetInt(m_selectedSave + "_score", int.Parse(Score.GetComponent<Text>().text));
+            
         }
 
         // Loads data from corresponding txt file and sets them in-game
@@ -99,6 +143,8 @@ namespace Mangos
             m_selectedSave = _savename;
             grid.GetComponent<MakeMap>().ClearMap();
 
+            // DEPRECATED
+            /*
             if (new FileInfo("Assets/_root/Resources/Saves/" + m_selectedSave + ".txt").Length == 0)
             {
                 Debug.Log("This wasn't supposed to happen");
@@ -138,6 +184,22 @@ namespace Mangos
                 }
                 reader.Close();
             }
+            */
+
+            Manager_Static.gameStateManager.SetScore(PlayerPrefs.GetInt(m_selectedSave + "_score"));
+            string valuesStr = PlayerPrefs.GetString(m_selectedSave + "_grid");
+            int[] arrValues = Array.ConvertAll(valuesStr.Split(' '), int.Parse);
+
+            int idValues = 0;
+            for (int i = 0; i < grid.GetComponent<MakeMap>().filas; i++)
+            {
+                for (int j = 0; j < grid.GetComponent<MakeMap>().columnas; j++)
+                {
+                    grid.GetComponent<MakeMap>().SetElement(i, j, arrValues[idValues]);
+                    idValues++;
+                }
+            }
+
             grid.GetComponent<MakeMap>().setupElem();
         }
 
@@ -154,6 +216,8 @@ namespace Mangos
                 GameObject.Destroy(child.gameObject);
             }
 
+            // DEPRECATED
+            /*
             long _i = 0;
             FileInfo[] fis = di.GetFiles();
             foreach (FileInfo fi in fis)
@@ -173,6 +237,25 @@ namespace Mangos
                     del.GetComponent<Button>().onClick.AddListener(delegate { DeleteSave(save.GetComponentInChildren<Text>().text); });
 
                     _i++;
+                }
+            }
+            */
+
+            if (PlayerPrefs.HasKey("AllSaves"))
+            {
+                string[] allSavesArr = PlayerPrefs.GetString("AllSaves").Split(' ');
+                for (int i = 0; i < allSavesArr.Length; i++)
+                {
+                    GameObject save = Instantiate(savePrefab, saveList.transform); // Instantiate Button
+                    save.GetComponent<RectTransform>().anchoredPosition = new Vector3(-75, -115 - (100 * i), 0); // Reposition Button
+                    save.GetComponentInChildren<Text>().text = allSavesArr[i];
+
+                    GameObject del = Instantiate(delPrefab, saveList.transform);
+                    del.GetComponent<RectTransform>().anchoredPosition = new Vector3(165, -115 - (100 * i), 0);
+
+                    // Set OnClick Method to LoadGame(_savename) with _savename as the button's text value
+                    save.GetComponent<Button>().onClick.AddListener(delegate { thicc.GetComponent<SetGameMode>().LoadSave(save.GetComponentInChildren<Text>().text); });
+                    del.GetComponent<Button>().onClick.AddListener(delegate { DeleteSave(save.GetComponentInChildren<Text>().text); });
                 }
             }
         }

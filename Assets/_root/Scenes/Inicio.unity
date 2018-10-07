@@ -979,7 +979,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &339533786
 GameObject:
@@ -2281,7 +2281,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1735455391}
+      - m_Target: {fileID: 1591235176}
         m_MethodName: CreateSavefile
         m_Mode: 2
         m_Arguments:
@@ -2291,7 +2291,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 0
+        m_CallState: 2
       - m_Target: {fileID: 315978437}
         m_MethodName: SetSavename
         m_Mode: 2
@@ -2572,7 +2572,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1591235178}
-        m_MethodName: ToggleNewSavePanel
+        m_MethodName: ToggleLoadSavePanel
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2856,7 +2856,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1266639129}
   m_OnClick:
     m_PersistentCalls:
@@ -3089,7 +3089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 0.19607843}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -3582,51 +3582,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1691463814}
   m_CullTransparentMesh: 0
---- !u!1 &1735455390
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1735455392}
-  - component: {fileID: 1735455391}
-  m_Layer: 0
-  m_Name: Saves
-  m_TagString: SaveConst
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1735455391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1735455390}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b705aabb582ce4428c067cd608f4ed1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saveList: {fileID: 275040202}
-  savePrefab: {fileID: 1226158295753732, guid: 3acff922c0121e94184edc6617c671b4, type: 2}
-  delPrefab: {fileID: 1852332044659414, guid: 83a4b688a094e01478af77bd8a853d33, type: 2}
-  grid: {fileID: 0}
-  Score: {fileID: 0}
---- !u!4 &1735455392
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1735455390}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 224.83295, y: 122.40519, z: 0.375}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1755032325
 GameObject:
   m_ObjectHideFlags: 0

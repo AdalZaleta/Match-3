@@ -16,6 +16,11 @@ namespace Mangos
             DontDestroyOnLoad(this);
         }
 
+        public void ClearAllPlayerPrefs()
+        {
+            PlayerPrefs.DeleteAll();
+        }
+
         public string getSavename()
         {
             return m_savename;
