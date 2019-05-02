@@ -25,6 +25,8 @@ namespace Mangos
         {
             if (particles != null)
                 PoolManager.Spawn(particles, transform.position, Quaternion.identity);
+
+            transform.position = Vector3.zero;
         }
     }
 }

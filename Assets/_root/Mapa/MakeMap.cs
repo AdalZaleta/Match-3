@@ -89,6 +89,7 @@ namespace Mangos
 					}
 				}
 			}
+            UpdateVisualizer();
             Manager_Static.gameStateManager.AddScore(contar);
 		}
 
@@ -118,7 +119,7 @@ namespace Mangos
 
 				}
 			}
-            Debug.Log("There were no matches");
+            //Debug.Log("There were no matches");
 			return false;
 		}
 
@@ -204,6 +205,7 @@ namespace Mangos
 
             Vector2Int[,] moveMap = new Vector2Int[filas, columnas];
             Vector2Int tempCor = new Vector2Int(0, 0);
+
             for (int i = 0; i < filas; i++)
                 for (int k = 0; k < columnas; k++)
                     moveMap[i, k] = elemento[i,k] == -1 ? new Vector2Int(-1, -1) : new Vector2Int(i, k);
@@ -242,6 +244,7 @@ namespace Mangos
 				}
 			}
 
+            UpdateVisualizer();
             Grid.CandyFall(moveMap);
         }
 

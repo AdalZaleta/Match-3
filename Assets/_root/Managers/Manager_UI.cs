@@ -8,6 +8,7 @@ namespace Mangos
     {
         public GameObject loadSavePanel;
         public GameObject newSavePanel;
+        public GameObject loadingPanel;
 
         private void Awake()
         {
@@ -20,6 +21,10 @@ namespace Mangos
         public void ToggleNewSavePanel(bool _bool)
         {
             newSavePanel.SetActive(_bool);
+        }
+        public void ToggleLoadingPanel(bool _bool)
+        {
+            loadingPanel.SetActive(_bool);
         }
     }
 }
